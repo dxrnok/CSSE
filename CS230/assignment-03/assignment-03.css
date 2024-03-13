@@ -4,7 +4,9 @@ h1{
 	text-align: center;
 	color: #2c2c2c;
 }
-
+#container{
+	text-align: center;  
+}
 body{
 	background-color: lightgrey;
 }
@@ -43,4 +45,8 @@ th{
 .right{
 	text-align: center;
 	-webkit-user-modify: read-write;
+}
+
+#ins{
+	
 }
