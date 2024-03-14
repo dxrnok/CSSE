@@ -1,3 +1,4 @@
+
 public class LinkedList{
     private Link first;
     public LinkedList( ){
