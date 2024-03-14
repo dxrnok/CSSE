@@ -9,11 +9,11 @@ textR.forEach(function(element){
         }else{
             element.style.textAlign = "right";
         }
-    
+        recalcAvg();
     });
 })
 
-function sumOfResults(element){
+function sumFromRows(element){
     element.querySelectorAll(".right").forEach(function(cell){
         const value = parseInt(cell.textContent);
         if (!isNaN(value)) {
@@ -21,4 +21,8 @@ function sumOfResults(element){
         }
     });
     return sum;
+}
+
+function recalcAvg(){
+    
 }
