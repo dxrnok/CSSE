@@ -7,10 +7,10 @@ public class lab5 {
 
         System.out.print("Enter the numbers to insert (separated by commas): ");
         String input = sc.nextLine();
-        String[] numbers = input.split(",");
+        String[] numsArr = input.split(",");
         sc.close();
-        for (String number : numbers) {
-            int num = Integer.parseInt(number.trim());
+        for (String eachNum : numsArr) {
+            int num = Integer.parseInt(eachNum.trim());
             list.insert(num);
         }
 

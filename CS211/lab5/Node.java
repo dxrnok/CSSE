@@ -65,6 +65,6 @@ class Node {
         } else {
             levels = rightLevels;
         }
-        return levels + 1;
+        return levels+1;
     }
 }
