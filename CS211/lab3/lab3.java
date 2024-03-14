@@ -1,3 +1,5 @@
+package CS211.lab3;
+
 import java.util.*;
 public class lab3{
     public static void main(String[] args){
