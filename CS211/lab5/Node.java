@@ -52,7 +52,7 @@ class Node {
     } // end insert()
 
     public static int calculateLevels(Node root) {
-        if (root == null) {
+        if(root == null) {
             return 0;
         }
 
@@ -60,11 +60,12 @@ class Node {
         int rightLevels = calculateLevels(root.rightChild);
         
         int levels ;
-        if (leftLevels > rightLevels) {
+        if(leftLevels > rightLevels) {
             levels = leftLevels;
-        } else {
+        }else {
             levels = rightLevels;
         }
+        
         return levels+1;
     }
 }
