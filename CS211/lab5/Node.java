@@ -56,14 +56,14 @@ class Node {
             return 0;
         }
 
-        int leftLevels = calculateLevels(root.leftChild);
-        int rightLevels = calculateLevels(root.rightChild);
+        int left = calculateLevels(root.leftChild);
+        int right = calculateLevels(root.rightChild);
         
-        int levels ;
-        if(leftLevels > rightLevels) {
-            levels = leftLevels;
+        int levels;
+        if(left > right) {
+            levels = left;
         }else {
-            levels = rightLevels;
+            levels = right;
         }
         
         return levels+1;
