@@ -5,7 +5,7 @@ class Node {
     Node rightChild;
     Node root;
 
-    public Node find(int key) {
+    /* public Node find(int key) {
         Node current = root; // start at the root
         while (current.data != key) { // while no match
             if (key < current.data) { // go left?
@@ -18,7 +18,7 @@ class Node {
             }
         }
         return current;
-    }
+    } */
 
     public void insert(int id) {
         Node newNode = new Node(); // make new node
