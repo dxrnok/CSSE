@@ -5,7 +5,7 @@ class Node {
     Node rightChild;
     Node root;
 
-    public Node find(int key) {
+    /* public Node find(int key) {
         Node current = root; // start at the root
         while (current.data != key) { // while no match
             if (key < current.data) { // go left?
@@ -18,7 +18,7 @@ class Node {
             }
         }
         return current;
-    }
+    } */
 
     public void insert(int id) {
         Node newNode = new Node(); // make new node
@@ -52,7 +52,7 @@ class Node {
     } // end insert()
 
     public static int calculateLevels(Node root) {
-        if (root == null) {
+        if(root == null) {
             return 0;
         }
 
@@ -60,11 +60,12 @@ class Node {
         int rightLevels = calculateLevels(root.rightChild);
         
         int levels ;
-        if (leftLevels > rightLevels) {
+        if(leftLevels > rightLevels) {
             levels = leftLevels;
-        } else {
+        }else {
             levels = rightLevels;
         }
+        
         return levels+1;
     }
 }

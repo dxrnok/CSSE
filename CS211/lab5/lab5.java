@@ -5,7 +5,7 @@ public class lab5 {
         Node list = new Node();
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter the numbers to insert (separated by commas): ");
+        System.out.print("Enter the numbers: ");
         String input = sc.nextLine();
         String[] numsArr = input.split(",");
         sc.close();
@@ -16,6 +16,6 @@ public class lab5 {
 
         int levels = Node.calculateLevels(list.root);
 
-        System.out.println("The resulting binary tree has " + levels + " levels");
+        System.out.println("Levels: " + levels);
     }
 }
