@@ -1,5 +1,3 @@
-package cs211;
-
 public class recursiveLoanMethod {
 	public static void main(String[] args) {
 		double x = loan(250000.0, 0.03, 1600.0);

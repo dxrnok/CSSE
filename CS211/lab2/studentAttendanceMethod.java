@@ -1,5 +1,4 @@
-package cs211;
-import java.util.*;
+sssimport java.util.*;
 public class studentAttendanceMethod {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
