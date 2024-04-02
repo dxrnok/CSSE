@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management Application</title>
+    <link rel="stylesheet" href="assignment-04.css">
+</head>
+<body>
+    <h1>User Management System</h1>
+
+    <div id="createUser">
+        <h2>Create New User</h2>
+        <label for="title">Title:</label>
+        <input type="text" id="title"><br>
+        <label for="firstnames">First Names:</label>
+        <input type="text" id="firstnames"><br>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname"><br>
+        <label for="mobileNO">Mobile Number:</label>
+        <input type="text" id="mobileNO"><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email"><br>
+        <label for="address1">Address Line 1:</label>
+        <input type="text" id="address1"><br>
+        <label for="address2">Address Line 2:</label>
+        <input type="text" id="address2"><br>
+        <label for="town">Town:</label>
+        <input type="text" id="town"><br>
+        <label for="city">City:</label>
+        <input type="text" id="city"><br>
+        <label for="eircode">Eircode:</label>
+        <input type="text" id="eircode"><br>
+        <button onclick="createUser()">Create User</button>
+    </div>
+
+    <div id="searchUser">
+        <h2>Search Users</h2>
+        <label for="searchName">Search by First Name:</label>
+        <input type="text" id="searchName">
+        <button onclick="searchUsersByName()">Search</button>
+        <div id="searchResults"></div>
+    </div>
+
+    <div id="deleteUser">
+        <h2>Delete User</h2>
+        <label for="deleteUserId">Enter User ID:</label>
+        <input type="number" id="deleteUserId">
+        <button onclick="deleteUser()">Delete User</button>
+    </div>
+
+    <script src="functions.js"></script>
+</body>
+</html>
