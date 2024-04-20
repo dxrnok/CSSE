@@ -10,13 +10,13 @@ public class lab8 {
         String input = sc.nextLine();
 
         PriorityQueue<Tree> PQ = new PriorityQueue<Tree>();
+        PriorityQueue<Tree> PQ1 = new PriorityQueue<Tree>();
         int[] frequencyArray = new int[128];
 
         for(char c : input.toCharArray()) {
             frequencyArray[c]++;
         }
 
-        // Create Tree objects for each character and its frequency
         for(int i = 0; i < frequencyArray.length; i++) {
             if (frequencyArray[i] > 0) {
                 Tree tree = new Tree();
@@ -24,12 +24,26 @@ public class lab8 {
                 tree.root.letter = (char)i;
                 tree.frequency = frequencyArray[i];
                 PQ.add(tree);
+                PQ1.add(tree);
             }
         }
         
+        while(PQ1.size() > 1){
+            Tree r = PQ1.poll();
+            Tree l = PQ1.poll();
+            Tree mergedTree = new Tree(r.frequency, l.frequency, r, l);
+            //PQ.add(mergedTree);
+            PQ1.add(mergedTree);
+        }
+
         while(!PQ.isEmpty()) {
             Tree tree = PQ.poll();
             System.out.println("'" + tree.root.letter + "' has a frequency of " + tree.frequency);
+        }
+
+        while(!PQ1.isEmpty()){
+            Tree merge = PQ1.poll();
+            System.out.println("'" + input + "' " + "has a freqeuncy of " + merge.frequency);
         }
 
         sc.close();
@@ -43,6 +57,13 @@ class Tree implements Comparable<Tree> {
 
     public Tree() {                // constructor
         root = null;             // no nodes in tree yet
+    }
+
+    public Tree(int one, int two, Tree r, Tree l){
+        root = new Node();
+        this.frequency = frequency+one+two;
+        this.root.rightChild = r.root;
+        this.root.leftChild = l.root;
     }
 
     //the PriorityQueue needs to be able to somehow rank the objects in it
