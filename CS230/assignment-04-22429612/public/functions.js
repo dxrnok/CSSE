@@ -2,7 +2,7 @@
 function createUser(title, firstnames, surname, mobileNO, email, address1, address2, town, city, eircode) {
     const userId = results.insertId;
     const userSql = `INSERT INTO users (id,title, firstnames, surname, mobileNO, email,address1, address2, town, city, eircode) VALUES (?, ?, ?, ?, ?)`;
-    con.query(userSql, [userId, title, firstnames, surname, mobileNO, email, address1, address1, town, city, eircode], function(err, results){
+    con.query(userSql, [userId, title, firstnames, surname, mobileNO, email, address1, address2, town, city, eircode], function(err, results){
         if (err) {
             console.error('Error creating user:', err);
             return;
