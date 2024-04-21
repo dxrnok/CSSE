@@ -3,6 +3,7 @@ const express = require('express');
 const connect = require("./connection/atlas_connect");
 const path = require('path');
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
