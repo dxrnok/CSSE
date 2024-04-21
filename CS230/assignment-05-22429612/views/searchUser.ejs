@@ -21,8 +21,7 @@
                     <option value="dr">Dr</option>
                     <option value="other">Other (Specify)</option>
                 </select>
-                <label for="other"></label>
-                <input type="text" id="otherInput" name ='otherInput' required>
+                <input type="text" id="otherInput" required>
                 
                 <label for="fname">First Name(s):</label>
                 <input type="text" id="fname" name ='fname' required>
@@ -66,12 +65,6 @@
                     }
                   
                 });
-            });
-            document.querySelector('form').addEventListener('submit', function() {
-                // If the title is "Other", include the value of otherInput in the form data
-                if (titleSelect.value === 'other') {
-                    this.otherInput.value = otherInput.value;
-                }
             });
         </script>
     </body>

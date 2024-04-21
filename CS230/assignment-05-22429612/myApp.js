@@ -49,33 +49,36 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
-app.get('/create', (req, res) => {
+app.get('/createUser', (req, res) => {
     //res.sendFile(path.join(__dirname, '/usersCreate.ejs'));
     res.render('usersCreate');
 });
 
-app.get('/search', (req, res) => {
+app.get('/searchUser', (req, res) => {
     res.render('userSearch');
 });
 
-app.get('/create/ship', (req, res) => {
+app.get('/createUser/userShippingAddress', (req, res) => {
     //res.sendFile(path.join(__dirname, '/usersCreate.ejs'));
     res.render('shipping');
 });
 
 let userID; //storing userID from USER CREATION
-app.post('/create', async (req, res) => {
+app.post('/createUser', async (req, res) => {
     try {
+        
         const dataUser = {
+            title: req.body.title === 'other' ? "Other (" +req.body.otherInput+")" : req.body.title,
             fname: req.body.fname,
             sname: req.body.sname,
             mobile: req.body.mobile,
             email: req.body.email
         };
+
         const userData = await collectionUser.insertOne(dataUser);
-        console.log("User inserted successfully:", userData);
+        console.log("User Inserted Successfully:", userData);
         console.log("Adding address...");
-        // Assuming you want to insert address data too
+    
         userID = userData.insertedId;
         const dataAddress = {
             customerID: userID,
@@ -86,20 +89,35 @@ app.post('/create', async (req, res) => {
             eircode: req.body.eircode
         } 
         const addressData = await collectionAddress.insertOne(dataAddress);
-        console.log("User inserted successfully:", addressData);
-        if (req.body.ship) { // Assuming the checkbox name is "shippingDifferent"
+        console.log("Address Inserted Successfully:", addressData);
+        if (req.body.ship) {    //check the checkbox if yes redirect
             console.log("Redirecting to Shipping Address...");
-            res.redirect('/create/ship');
+            res.redirect('/createUser/userShippingAddress');
             return;
+        }else{
+            const shipData = await collectionShip.insertOne(dataAddress);
+            console.log("Shipping Address Inserted Successfully:", shipData);
         }
-        res.send("User created successfully!");
+
+        //send a message and redirect to main page
+        const script = `
+            <script>
+                alert('User created successfully!');
+                window.location.href = '/';
+            </script>
+        `;
+        console.log("User created successfully!");
+
+        //Successful status and exec script
+        res.status(200).send(script);
+        
     } catch (error) {
         console.error("Error Creating User: ", error);
         res.status(500).send("Error Creating User");
     }
 });
 
-app.post('/create/ship', async (req, res) => {
+app.post('/createUser/userShippingAddress', async (req, res) => {
     try {
         // Proceed with inserting the shipping address using userId
         const dataAddress = {
