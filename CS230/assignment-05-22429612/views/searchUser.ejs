@@ -24,27 +24,28 @@
                 <input type="text" id="otherInput" required>
                 
                 <label for="fname">First Name(s):</label>
-                <input type="text" id="fname" name ='fname' required>
+                <input type="text" id="fname" name ='fname'>
                 <label for="sname">Surname:</label>
-                <input type="text" id="sname" name ='sname' required>
-                <label for="mobileNO">Mobile Number:</label>
+                <input type="text" id="sname" name ='sname'>
+                <!-- <label for="mobileNO">Mobile Number:</label>
                 <input type="text" id="mobileNO" name ='mobile' required>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name ='email' required>
+                <input type="email" id="email" name ='email' required> -->
                 <label for="address1">Address Line 1:</label>
                 <input type="text" id="address1" name ='address1' required>
-                <label for="address2">Address Line 2:</label>
-                <input type="text" id="address2" name ='address2'>
-                <label for="town">Town:</label>
+               <!--  <label for="address2">Address Line 2:</label>
+                <input type="text" id="address2" name ='address2'> -->
+                <label for="town">City/Town:</label>
                 <input type="text" id="town" name ='town' required>
-                <label for="city">City:</label>
+                <label for="city">County:</label>
                 <input type="text" id="city" name ='city' required>
                 <label for="eircode">Eircode:</label>
                 <input type="text" id="eircode" name ='eircode'>
                 <label for="ship">Other Shipping Address:</label>
                 <input type="checkbox" id="ship" name="ship" value="ship">
                 <br>
-                <button id ='createB'  type="submit">Create User</button>
+                <button class ='createB' id="searchB" type="submit">Search</button>
+                <button class ='createB' id="exampleB" type="submit">Example Search</button>
             </form>
         </div>
 
@@ -63,7 +64,6 @@
                         otherInput.removeAttribute('required');
                         otherInput.value = '';
                     }
-                  
                 });
             });
         </script>

@@ -36,31 +36,30 @@
                 <input type="text" id="address1" name ='address1' required>
                 <label for="address2">Address Line 2:</label>
                 <input type="text" id="address2" name ='address2'>
-                <label for="town">Town:</label>
+                <label for="town">City/Town:</label>
                 <input type="text" id="town" name ='town' required>
-                <label for="city">City:</label>
+                <label for="city">County:</label>
                 <input type="text" id="city" name ='city' required>
                 <label for="eircode">Eircode:</label>
                 <input type="text" id="eircode" name ='eircode'>
                 <label for="ship">Other Shipping Address:</label>
-                <input type="checkbox" id="ship" name="ship" value="ship">
+                <input type="checkbox" id="ship" name="ship" value="ship"
                 <br>
-                <button id ='createB'  type="submit">Create User</button>
+                <button id ='createUserB' type="submit">Create User</button>
             </form>
         </div>
+        
 
         <script>    
-            const inputs = document.querySelectorAll('input');
             const title = document.querySelectorAll("#title");
-
+            const otherInput = document.getElementById("otherInput");
             title.forEach((element) => {
                 element.addEventListener('change', () => {
-                    const otherInputContainer = document.getElementById("otherInput");
                     if (element.value === "other") {
-                        otherInputContainer.style.visibility = "visible";
+                        otherInput.style.visibility = "visible";
                         otherInput.setAttribute('required', true);
                     } else {
-                        otherInputContainer.style.visibility = "hidden";
+                        otherInput.style.visibility = "hidden";
                         otherInput.removeAttribute('required');
                         otherInput.value = '';
                     }

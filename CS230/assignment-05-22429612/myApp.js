@@ -69,7 +69,7 @@ app.post('/createUser', async (req, res) => {
     try {
         
         const dataUser = {
-            title: req.body.title === 'other' ? "Other (" +req.body.otherInput+")" : req.body.title,
+            title: req.body.title === 'other' ? req.body.otherInput : req.body.title,
             fname: req.body.fname,
             sname: req.body.sname,
             mobile: req.body.mobile,
@@ -79,6 +79,7 @@ app.post('/createUser', async (req, res) => {
         const userData = await collectionUser.insertOne(dataUser);
         console.log("User Data Inserted Successfully:", userData);
         console.log("Adding address...");
+        console.log(req.body);
     
         userID = userData.insertedId;
         const dataAddress = {
@@ -100,7 +101,7 @@ app.post('/createUser', async (req, res) => {
             console.log("Shipping Address Inserted Successfully:", shipData);
         }
 
-        //send a message and redirect to main page
+        //send a message and redirect to main page found similar example on stackoverflow to change page and alert
         const script = `
             <script>
                 alert('User created successfully!');
@@ -144,6 +145,16 @@ app.post('/createUser/userShippingAddress', async (req, res) => {
     } catch (error) {
         console.error("Error Creating User: ", error);
         res.status(500).send("Error Creating User");
+    }
+});
+
+app.post('/searchUser', (req, res) => {
+    const userData = {
+        address1: req.body.address1,
+        address2: req.body.address1,
+        town: req.body.town,
+        city: req.body.city,
+        eircode: req.body.eircode
     }
 });
 

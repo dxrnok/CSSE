@@ -1,17 +1,31 @@
-body{
-	height: 90vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; 
+}
+
+#createUser {
+    width: 80%; 
+    padding: 30px;
+    background-color: #fff; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
 h1{
 	text-transform: uppercase;
 	font-family: arial black;
+	text-align: center;
 }
+
 label{
 	font-family: arial;
 }
+
 input {
 	display: flex;
 	margin-bottom: 2px;
@@ -22,29 +36,26 @@ input {
 	border-radius: 5px;
 	color: #000;
 	cursor: pointer;
+	width: 100%;
 }
-#ship{
-	display: inline;
-}
+
 select {
 	background-color: rgb(119, 207, 236);
 	border-color: rgb(123, 175, 192);
 	border-radius: 5px;
 	color: #000;
 	cursor: pointer;
+	width: 50%;
 }
+
 select:hover{
 	cursor: pointer;
 	transition: all 0.2s linear;
     transform: translate3d(0, -3px, 0);
-
 	background: rgb(51, 145, 177);
 }
-option:hover {
-	background-color: yellow;
-  }
+
 #otherInput{
-	display: list-item;
 	margin-bottom: 3px;
 	visibility: hidden;
 }
@@ -65,7 +76,8 @@ input:required, select:required{
 input:required:invalid, select:required:invalid {
   border: 2px solid red;
 }
-#createB{
+
+#createUserB{
 	border-radius: 5px;
 	margin-top: 3px;
 	text-align: center;
@@ -79,7 +91,8 @@ input:required:invalid, select:required:invalid {
 	transition: all 0.2s linear;
     transform: translate3d(0, 3px, 0);
 }
-.B{
+
+.createMainB{
 	margin: auto;
     display: inline-block;
     font-family: sans-serif;
@@ -93,7 +106,7 @@ input:required:invalid, select:required:invalid {
     transform: translate3d(0, 3px, 0);
 }
 
-.B:hover, #createB:hover{
+.createMainB:hover, #createUserB:hover{
     cursor: pointer;
 	transition: all 0.2s linear;
     transform: translate3d(0, -3px, 0);
