@@ -64,14 +64,7 @@
                         otherInput.removeAttribute('required');
                         otherInput.value = '';
                     }
-                  
                 });
-            });
-            document.querySelector('form').addEventListener('submit', function() {
-                // If the title is "Other", include the value of otherInput in the form data
-                if (titleSelect.value === 'other') {
-                    this.otherInput.value = otherInput.value;
-                }
             });
         </script>
     </body>
