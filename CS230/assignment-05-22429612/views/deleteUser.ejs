@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Delete User</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>Delete User</h1>
+            <form action="/deleteUser" method="post">
+                <label for="userID">User ID:</label>
+                <input type="number" id="userID" name ='userID'>
+                <br>
+                <button class ='createUserB' value="deleteB" id="deleteB" name="button" type="submit">Delete User</button>
+                <button class="createUserB" class='createB' value="exampleB" id="exampleB" name="button" type="submit">Example Delete</button>
+                <button class="createUserB" class='createB' value="deleteAllB" id="deleteAllB" name="button" type="submit">Delete All</button>
+            </form>
+        </div>
+
+        <script>    
+            const button = document.getElementById('exampleB');
+            const fname = document.getElementById('fname');
+            
+            button.addEventListener('click', () => {
+                fname.removeAttribute('required');
+            })
+        </script>
+    </body>
+</html>

@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
-        <div id="createUser">
+        <div id="form">
             <h1>Create User</h1>
             <form action="/createUser" method="post">
                 <label for="title">Title:</label>
@@ -43,9 +43,12 @@
                 <label for="eircode">Eircode:</label>
                 <input type="text" id="eircode" name ='eircode'>
                 <label for="ship">Other Shipping Address:</label>
-                <input type="checkbox" id="ship" name="ship" value="ship"
+                <input type="checkbox" id="ship" name="ship" value="ship">
                 <br>
-                <button id ='createUserB' type="submit">Create User</button>
+                <button class ='createUserB' name="button" value="createUser" type="submit">Create User</button>
+            </form>
+            <form action="/createUser" method="post">
+                <button class ='createUserB' onclick="alertExampleB()" style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
             </form>
         </div>
         
@@ -65,6 +68,10 @@
                     }
                 });
             });
+
+            function alertExampleB(){
+                alert('WORKS ONLY FOR 10 USERS IF APP IS STOPPED MAKE SURE TO DELETE CREATED USERS. *NOTE* ALL USER FIRST NAME AND SURNAME START WITH A CAPITAL WHEN SEARCHING');
+            }
         </script>
     </body>
 </html>

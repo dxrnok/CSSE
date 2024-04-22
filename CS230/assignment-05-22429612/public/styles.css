@@ -1,6 +1,5 @@
 
 body, html {
-    height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -8,13 +7,15 @@ body, html {
     background-color: #f0f0f0; 
 }
 
-#createUser {
+#form {
+	height: 100%;
     width: 80%; 
     padding: 30px;
     background-color: #fff; 
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
+
 
 h1{
 	text-transform: uppercase;
@@ -38,7 +39,9 @@ input {
 	cursor: pointer;
 	width: 100%;
 }
-
+#ship{
+	margin-top: 3px;
+}
 select {
 	background-color: rgb(119, 207, 236);
 	border-color: rgb(123, 175, 192);
@@ -77,7 +80,7 @@ input:required:invalid, select:required:invalid {
   border: 2px solid red;
 }
 
-#createUserB{
+.createUserB{
 	border-radius: 5px;
 	margin-top: 3px;
 	text-align: center;
@@ -106,7 +109,7 @@ input:required:invalid, select:required:invalid {
     transform: translate3d(0, 3px, 0);
 }
 
-.createMainB:hover, #createUserB:hover{
+.createMainB:hover, .createUserB:hover{
     cursor: pointer;
 	transition: all 0.2s linear;
     transform: translate3d(0, -3px, 0);
