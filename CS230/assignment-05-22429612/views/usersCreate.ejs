@@ -22,7 +22,7 @@
                     <option value="other">Other (Specify)</option>
                 </select>
                 <label for="other"></label>
-                <input type="text" id="otherInput" name ='otherInput' required>
+                <input type="text" id="otherInput" name ='otherInput' placeholder="Prof" required>
                 
                 <label for="fname">First Name(s):</label>
                 <input type="text" id="fname" name ='fname' required>
@@ -48,7 +48,7 @@
                 <button class ='createUserB' name="button" value="createUser" type="submit">Create User</button>
             </form>
             <form action="/createUser" method="post">
-                <button class ='createUserB' onclick="alertExampleB()" style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
+                <button class ='createUserB' style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
             </form>
         </div>
         
@@ -68,10 +68,6 @@
                     }
                 });
             });
-
-            function alertExampleB(){
-                alert('WORKS ONLY FOR 10 USERS IF APP IS STOPPED MAKE SURE TO DELETE CREATED USERS. *NOTE* ALL USER FIRST NAME AND SURNAME START WITH A CAPITAL WHEN SEARCHING');
-            }
         </script>
     </body>
 </html>
