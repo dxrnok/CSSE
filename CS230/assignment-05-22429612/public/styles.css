@@ -96,6 +96,7 @@ input:required:invalid, select:required:invalid {
 }
 
 .createMainB{
+	border-radius: 5px;
 	margin: auto;
     display: inline-block;
     font-family: sans-serif;

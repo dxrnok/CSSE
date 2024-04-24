@@ -9,9 +9,9 @@
     <body>
         <div id="form">
             <h1>UPDATE DATA</h1>
-            <form action="/updateUser/userData" method="post">
+            <form action="/updateUser/data" method="post">
                 <label for="userID">User ID: </label>
-                <input type="text" id="userID" name ='userID' placeholder="(e.g 66278f120386d5ec74899451)">
+                <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
                 <label for="title">Title:</label>
                 <select style="margin-top: 5px;" name="title" id="title">
                     <option></option>
@@ -35,7 +35,7 @@
                 <input type="email" id="email" name ='email'>
                 <button class ='createUserB' name="button" value="updateData" type="submit">Update User</button>
             </form>
-            <form action="/updateUser/userData" method="post">
+            <form action="/updateUser/data" method="post">
                 <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
             </form>
         </div>

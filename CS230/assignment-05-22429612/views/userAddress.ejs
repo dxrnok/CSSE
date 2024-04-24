@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Address</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div id="form">
+            <h1>UPDATE ADDRESS</h1>
+            <form action="/updateUser/address" method="post">
+                <label for="userID">User ID: </label>
+                <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
+                <label for="address1">Address Line 1:</label>
+                <input type="text" id="address1" name ='address1'>
+                <label for="address2">Address Line 2:</label>
+                <input type="text" id="address2" name ='address2'>
+                <label for="town">City/Town:</label>
+                <input type="text" id="town" name ='town'>
+                <label for="city">County:</label>
+                <input type="text" id="city" name ='city'>
+                <label for="eircode">Eircode:</label>
+                <input type="text" id="eircode" name ='eircode'>
+                <button class ='createUserB' name="button" value="updateAddress" type="submit">Update Address</button>
+            </form>
+            <form action="/updateUser/address" method="post">
+                <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
+            </form>
+        </div>
+        
+
+        <script>    
+            const title = document.querySelectorAll("#title");
+            const otherInput = document.getElementById("otherInput");
+            title.forEach((element) => {
+                element.addEventListener('change', () => {
+                    if (element.value === "other") {
+                        otherInput.style.visibility = "visible";
+                        otherInput.setAttribute('required', true);
+                    } else {
+                        otherInput.style.visibility = "hidden";
+                        otherInput.removeAttribute('required');
+                        otherInput.value = '';
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -59,6 +59,11 @@ app.get('/createUser', (req, res) => {
 app.get('/userOrder', (req, res) => {
     res.render('userOrder');
 });
+//render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
+app.get('/updateUser/order', (req, res) => {
+    res.render('updateOrder');
+});
+
 
 //render searchUser.ejs when GET request is made to /searchUser
 app.get('/searchUser', (req, res) => {
@@ -80,16 +85,16 @@ app.get('/updateUser', (req, res) => {
     res.render('updateUser');
 });
 //render updateData.ejs when GET request is made to /updateUser/userData
-app.get('/updateUser/userData', (req, res) => {
+app.get('/updateUser/data', (req, res) => {
     res.render('updateData');
 });
-//render userAddress.ejs when GET request is made to /updateUser/userAddress
-app.get('/updateUser/userAddress', (req, res) => {
+//render userAddress.ejs when GET request is made to /updateUser/address
+app.get('/updateUser/address', (req, res) => {
     res.render('userAddress');
 });
 
 //render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
-app.get('/updateUser/userShippingAddress', (req, res) => {
+app.get('/updateUser/shippingAddress', (req, res) => {
     res.render('userShippingAddress');
 });
 
@@ -110,7 +115,7 @@ app.post('/createUser', async (req, res) => {
             };
 
             const userData = await collectionUser.insertOne(dataUser);  //insert data into collection
-            console.log('User Data Inserted Successfully:', userData);  //log that insertion went successfully
+            console.log('User Data Inserted Successfully:', userData.acknowledged);  //log that insertion went successfully
         
             
             let userID = userData.insertedId;   //store user _id that was just inserted (from mongoDB docs)
@@ -125,7 +130,7 @@ app.post('/createUser', async (req, res) => {
                 eircode: req.body.eircode
             };
             const addressData = await collectionAddress.insertOne(dataAddress); //insert data into collection
-            console.log('Address Inserted Successfully:', addressData); //log that Address was inserted Successfully
+            console.log('Address Inserted Successfully:', addressData.acknowledged ); //log that Address was inserted Successfully
             if (req.body.ship) {    //check if the checkbox if clicked
                 console.log('Redirecting to Shipping Address...');  //log that you have been redirected
                 res.redirect('/createUser/userShippingAddress');    //redirect onto page to create shipping address
@@ -133,11 +138,11 @@ app.post('/createUser', async (req, res) => {
             }else{
                 //if ship address is the same as home address then just insert home address into ship
                 const shipData = await collectionShip.insertOne(dataAddress);
-                console.log('Shipping Address Inserted Successfully:', shipData);
+                console.log('Shipping Address Inserted Successfully:', shipData.acknowledged );
             }
 
             const phones = ['XR', '15', '8', '11', '14', '13'];
-            const randomNum = Math.floor(Math.random() * 5);
+            const randomNum = Math.floor(Math.random() * 6);
             let picked = phones[randomNum];
         
             const order = await collectionOrders.insertOne({
@@ -145,7 +150,7 @@ app.post('/createUser', async (req, res) => {
                 manufacturer: 'iPhone',
                 model: picked
             })
-            console.log('Order for User Placed:', order);
+            console.log('Order Placed Successfully:', order.acknowledged );
             //send a message and redirect to main page found similar example on stackoverflow to change page and alert
             //this format will be used multiple times through out the code so i provided message here
             //they all have the same intention just changed to satisfy part of code
@@ -210,10 +215,10 @@ app.post('/createUser', async (req, res) => {
             const insert10Ordres = await collectionOrders.insertMany(userOrders);
             
             //log that everything went successfully
-            console.log('Users Inserted Successfully:', insert10Users);
-            console.log('Addresses Inserted Successfully:', insert10Address);
-            console.log('Shipping Addresses Inserted Successfully:', insert10ShipAddress);
-            console.log('User Orders Inserted Successfullt:', insert10Ordres);
+            console.log('Users Inserted Successfully:', insert10Users.acknowledged );
+            console.log('Addresses Inserted Successfully:', insert10Address.acknowledged );
+            console.log('Shipping Addresses Inserted Successfully:', insert10ShipAddress.acknowledged );
+            console.log('User Orders Inserted Successfullt:', insert10Ordres.acknowledged );
 
             //clear userids to prevent file from getting too large
             //and this will make sure that new entrys are added for new users
@@ -252,7 +257,7 @@ app.post('/createUser/userShippingAddress', async (req, res) => {
         } 
         //insert data into collection and log that it went successfully
         const shipData = await collectionShip.insertOne(dataAddress);
-        console.log('User Data Inserted Successfully:', shipData);
+        console.log('User Data Inserted Successfully:', shipData.acknowledged );
 
         const script = `
             <script>
@@ -419,19 +424,20 @@ app.post('/userOrder', async (req, res) => {
 
             if(idIns.length > 0){   //check if any there id was found 
                 const userObj = idIns[0]._id;   //store id
-                const phones = ['XR', '15', '8', '11', '14', '13'];
-                const randomNum = Math.floor(Math.random() * 5);
-                let picked = phones[randomNum];
+                const phones = ['XR', '15', '8', '11', '14', '13'];     //possible models being ordered
+                const randomNum = Math.floor(Math.random() * 5);        //pick at random
+                let picked = phones[randomNum];                         
 
                 const order = {
                     customerID: userObj,
-                    manufacturer: 'iPhone',
-                    model: picked
+                    manufacturer: 'iPhone', //HARD CODED BECAUSE I INPUTED ONLY ONE MANUFACTURER
+                                            //if you want user input allowed change iPhone to req.body.manufacturer
+                    model: picked           //store the random phone picked
                 }
                 //execution of deleting from databases when id is mathced
                 const userOrder = await collectionUser.insertOne(order);
                 
-                console.log('Placed Order For User: ', userOrder);
+                console.log('Placed Order For User: ', userOrder.acknowledged);
             }else{
                 console.log("There Are No Users In Database");
                 script = `
@@ -453,7 +459,7 @@ app.post('/userOrder', async (req, res) => {
             }
 
             const userOrder = await collectionOrders.insertOne(userData);    //find user(s) from collection
-            console.log('Placed Order For User: ', userOrder);
+            console.log('Placed Order For User: ', userOrder.acknowledged);
             let script = `
                 <script>
                     alert('Order Printed To Console!');
@@ -492,10 +498,10 @@ app.post('/deleteUser', async (req, res) => {
                 const deleteUserO = await collectionOrders.deleteOne({customerID: userObj});
                 
                 const objToString = userObj.toString(); //change id into string
-                console.log('Users Deleted With ID: ',  objToString , deleteUser);
-                console.log('Users Address Deleted With ID: ', objToString, deleteUserA);
-                console.log('Users Shippng Address Deleted With ID: ', objToString, deleteUserS);
-                console.log('Users Orders With ID: ', objToString, deleteUserO);
+                console.log('Users Deleted With ID: ',  objToString , ' Deleted Amount: ', deleteUser.deletedCount );
+                console.log('Users Address Deleted With ID: ', objToString, ' Deleted Amount: ', deleteUserA.deletedCount );
+                console.log('Users Shippng Address Deleted With ID: ', objToString, ' Deleted Amount: ', deleteUserS.deletedCount );
+                console.log('Users Orders With ID: ', objToString, ' Deleted Amount: ', deleteUserO.deletedCount );
             }else{
                 console.log("There Are No Users In Database");
                 script = `
@@ -509,9 +515,12 @@ app.post('/deleteUser', async (req, res) => {
             }
             res.status(code).send(script);
         }else if(req.body.button === 'deleteAllB'){ //check button value (this is used to delete ALL user+data from collections)
-            await collectionUser.deleteMany({});
-            await collectionAddress.deleteMany({});
-            await collectionShip.deleteMany({});
+            const users = await collectionUser.deleteMany({});
+            const address = await collectionAddress.deleteMany({});
+            const ship = await collectionShip.deleteMany({});
+            const orders = await collectionOrders.deleteMany({});
+
+            const all = users.deletedCount + address.deletedCount + ship.deletedCount + orders.deletedCount;
             const script = `
                     <script>
                         alert('Deleted All Users!');
@@ -519,7 +528,7 @@ app.post('/deleteUser', async (req, res) => {
                     </script>
             `;
             res.status(200).send(script);
-            console.log('Database Cleared!');
+            console.log('Database Cleared!', ' Deleted Amount: ', all);
         }else{
             const idIn = new ObjectId(req.body.userID); //store id inserted from web into mongoDB new ObjectId
             if(Object.values(idIn).length > 0){ //check if id was provided by user
@@ -530,10 +539,10 @@ app.post('/deleteUser', async (req, res) => {
                 const deleteUserO = await collectionOrders.deleteOne({customerID : idIn});
 
                 //log all deletion
-                console.log('Deleted User With ID:', idIn, deleteUser);
-                console.log('Deleted User Address With ID:', idIn, deleteUserA);
-                console.log('Deleted User Shipping Address With ID:', idIn, deleteUserS);
-                console.log('Deleted User Orders With ID:', idIn, deleteUserO);
+                console.log('Deleted User With ID:', idIn, ' Deleted Amount: ', deleteUser.deletedCount);
+                console.log('Deleted User Address With ID:', idIn,' Deleted Amount: ', deleteUserA.deletedCount);
+                console.log('Deleted User Shipping Address With ID:', idIn,' Deleted Amount: ', deleteUserS.deletedCount);
+                console.log('Deleted User Orders With ID:', idIn,' Deleted Amount: ', deleteUserO.deletedCount);
 
                 const script = `
                     <script>
@@ -559,12 +568,14 @@ app.post('/deleteUser', async (req, res) => {
     }
 });
 
-app.post('/updateUser/userData', async (req, res) => {
+app.post('/updateUser/data', async (req, res) => {
     try{
         if(req.body.button === 'updateData'){
             const id = req.body.userID;
-            if(id.length === 24){
-                const idIn = new ObjectId(req.body.userID);
+            const idIn = new ObjectId(req.body.userID);
+            const userFind = await collectionUser.find({_id: idIn}).toArray()
+        
+            if(userFind.length > 0){
 
                 //set all inputs to seperate consts
                 const t = req.body.title;
@@ -593,27 +604,45 @@ app.post('/updateUser/userData', async (req, res) => {
 
                 //update users data
                 const userUpdate = await collectionUser.updateOne({_id: idIn}, {$set: updateQueryData});
-                console.log('Updated User Data: ' , userUpdate);
+                console.log('Updated User Data: ' , userUpdate.modifiedCount);
     
                 const script = `
                 <script>
                     alert('Deleted User Printed In Console!');
-                    window.location.href = '/deleteUser';
+                    window.location.href = '/';
                 </script>
                 `;
                 res.status(200).send(script);
             }else{
                 const script = `
                     <script>
-                        alert('User ID must be 24 characters!');
+                        alert('No User Found');
                         window.location.href = '/updateUser/userData';
                     </script>
                 `;
-                console.log('No User Data Updated!');
+                console.log('No User Found with ID: ', id);
                 res.status(500).send(script);
             }
         }else{
-            const userUpdate = await collectionUser.updateOne({_id: idIn}, {$set: updateQuery});
+            //random phone number generation
+            let numberR = '';
+            for(let i = 0; i < 10; i++){
+                numberR = numberR + Math.floor(Math.random() * 10);  
+            }
+            //updating users
+            const userMail = await collectionUser.updateOne({fname: 'James'}, {$set: {email: 'james.randers@mail.upsa'}});
+            const userNO = await collectionUser.updateOne({fname: 'James'}, {$set: {mobile: numberR}});
+            const userSN = await collectionUser.updateOne({fname: 'James'}, {$set: {sname: 'McGee'}});
+            console.log('Updated User Mail: ' , userMail.modifiedCount);    //this will work only once since unless changed ^^
+            console.log('Updated User Number: ' , userNO.modifiedCount);    //will generate random numbers
+            console.log('Updated User Surname: ' , userSN.modifiedCount);   //same as first update ^^
+            const script = `
+            <script>
+                alert('Updated User Printed In Console!');
+                window.location.href = '/';
+            </script>
+            `;
+            res.status(200).send(script);
         }
     }catch(error){
         console.error('Error Updating User: ', error);
@@ -621,18 +650,227 @@ app.post('/updateUser/userData', async (req, res) => {
     }
 
 });
-//render updateData.ejs when GET request is made to /updateUser/userData
-app.get('/updateUser/userData', (req, res) => {
-    res.render('updateData');
-});
-//render userAddress.ejs when GET request is made to /updateUser/userAddress
-app.get('/updateUser/userAddress', (req, res) => {
-    res.render('userAddress');
+
+app.post('/updateUser/address', async (req, res) => {
+    try{
+        if(req.body.button === 'updateAddress'){
+            const id = req.body.userID;
+            const idIn = new ObjectId(req.body.userID);
+            const userFind = await collectionUser.find({_id: idIn}).toArray()
+        
+            if(userFind.length > 0){
+                //here is a similar approach to last update method (app.post(/updateUser/data)
+                //set all inputs to seperate consts
+                const a1 = req.body.address1;
+                const a2 = req.body.address2;
+                const ct = req.body.town;
+                const c = req.body.city;
+                const e = req.body.eircode;
+                const updateQueryData = {};
+
+                //if input is not empty place it into query
+                if(a1 !== ''){
+                    updateQueryData.address1 = a1;
+                }
+                if(a2 !== ''){
+                    updateQueryData.address2 = a2;
+                }
+                if(ct !== ''){
+                    updateQueryData.town = ct;
+                }
+                if(c !== ''){
+                    updateQueryData.city = c;
+                }
+                if(e !== ''){
+                    updateQueryData.eircode = e;
+                }
+
+                //update users data
+                const userUpdate = await collectionAddress.updateOne({customerID: idIn}, {$set: updateQueryData});
+                console.log('Updated User : ', userUpdate.acknowledged);
+    
+                const script = `
+                <script>
+                    alert('Deleted User Printed In Console!');
+                    window.location.href = '/';
+                </script>
+                `;
+                res.status(200).send(script);
+            }else{
+                const script = `
+                    <script>
+                        alert('No User Found');
+                        window.location.href = '/updateUser/userData';
+                    </script>
+                `;
+                console.log('No User Found with ID: ', id);
+                res.status(500).send(script);
+            }
+        }else{
+            //same approach as last update method (app.post(/updateUser/data)
+            const findUser = await collectionUser.find({fname: 'James'}).toArray();
+            const id = userID = findUser[0]._id;
+            const userAddress1 = await collectionAddress.updateOne({customerID: id}, {$set: {address1: 'Maynooth Street'}});
+            const userA2 = await collectionAddress.updateOne({customerID: id}, {$set: {address2: 'River Side'}});
+            const userE = await collectionAddress.updateOne({customerID: id}, {$set: {eircode: 'XYZ 1123'}});
+            console.log('Updated User Address1: ' , userAddress1.acknowledged);
+            console.log('Updated User Address2: ' , userA2.acknowledged);
+            console.log('Updated User Eircode: ' , userE.acknowledged);
+            const script = `
+            <script>
+                alert('Deleted User Printed In Console!');
+                window.location.href = '/';
+            </script>
+            `;
+            res.status(200).send(script);
+        }
+    }catch(error){
+        console.error('Error Updating User: ', error);
+        res.status(500).send('Error Updating User');
+    }
 });
 
-//render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
-app.get('/updateUser/userShippingAddress', (req, res) => {
-    res.render('userShippingAddress');
+//similar approach used from last method (/updateUser/address)
+app.post('/updateUser/shippingAddress', async (req, res) => {
+    try{
+        if(req.body.button === 'updateAddress'){
+            const id = req.body.userID;
+            const idIn = new ObjectId(req.body.userID);
+            const userFind = await collectionUser.find({_id: idIn}).toArray()
+        
+            if(userFind.length > 0){
+                //set all inputs to seperate consts
+                const a1 = req.body.address1;
+                const a2 = req.body.address2;
+                const ct = req.body.town;
+                const c = req.body.city;
+                const e = req.body.eircode;
+                const updateQueryData = {};
+
+                //if input is not empty place it into query
+                if(a1 !== ''){
+                    updateQueryData.address1 = a1;
+                }
+                if(a2 !== ''){
+                    updateQueryData.address2 = a2;
+                }
+                if(ct !== ''){
+                    updateQueryData.town = ct;
+                }
+                if(c !== ''){
+                    updateQueryData.city = c;
+                }
+                if(e !== ''){
+                    updateQueryData.eircode = e;
+                }
+
+                //update users data
+                const userUpdate = await collectionShip.updateOne({customerID: idIn}, {$set: updateQueryData});
+                console.log('Updated User Address: ', userUpdate.acknowledged);
+    
+                const script = `
+                <script>
+                    alert('Updated Address Printed In Console!');
+                    window.location.href = '/';
+                </script>
+                `;
+                res.status(200).send(script);
+            }else{
+                const script = `
+                    <script>
+                        alert('No User Found');
+                        window.location.href = '/updateUser/shippingAddress';
+                    </script>
+                `;
+                console.log('No User Found with ID: ', id);
+                res.status(500).send(script);
+            }
+        }else{
+            const findUser = await collectionUser.find({fname: 'James'}).toArray();
+            const id = userID = findUser[0]._id;
+            const userAddress1 = await collectionShip.updateOne({customerID: id}, {$set: {address1: 'Maynooth Street'}});
+            const userA2 = await collectionShip.updateOne({customerID: id}, {$set: {address2: 'River Side'}});
+            const userE = await collectionShip.updateOne({customerID: id}, {$set: {eircode: 'XYZ 1123'}});
+            console.log('Updated User Address1: ' , userAddress1.acknowledged);
+            console.log('Updated User Address2: ' , userA2.acknowledged);
+            console.log('Updated User Eircode: ' , userE.acknowledged);
+            const script = `
+            <script>
+                alert('Deleted User Printed In Console!');
+                window.location.href = '/';
+            </script>
+            `;
+            res.status(200).send(script);
+        }
+    }catch(error){
+        console.error('Error Updating User: ', error);
+        res.status(500).send('Error Updating User');
+    }
+});
+
+//similar approach as method app.post(/updateUser/shippinAddress)
+app.post('/updateUser/order', async (req, res) => {
+    try{
+        if(req.body.button === 'updateOrder'){
+            const id = req.body.userID;
+            const idIn = new ObjectId(req.body.userID);
+            const userFind = await collectionUser.find({_id: idIn}).toArray()
+        
+            if(userFind.length > 0){
+                //set all inputs to seperate consts
+                const manu = req.body.manufacturer;
+                const model = req.body.model;
+                const updateQueryData = {};
+
+                //if input is not empty place it into query
+                if(a1 !== ''){
+                    updateQueryData.manufacturer = manu;
+                }
+                if(a2 !== ''){
+                    updateQueryData.model = model;
+                }
+
+                //update users data
+                const userUpdate = await collectionOrders.updateOne({customerID: idIn}, {$set: updateQueryData});
+                console.log('Updated User Order : ', userUpdate.acknowledged);
+
+                const script = `
+                <script>
+                    alert('Update Order Printed In Console!');
+                    window.location.href = '/';
+                </script>
+                `;
+                res.status(200).send(script);
+            }else{
+                const script = `
+                    <script>
+                        alert('No User Found');
+                        window.location.href = '/updateUser/order';
+                    </script>
+                `;
+                console.log('No User Found with ID: ', id);
+                res.status(500).send(script);
+            }
+        }else{
+            const findUser = await collectionUser.find({fname: 'James'}).toArray();
+            const id = userID = findUser[0]._id;
+            const phones = ['XR', '15', '8', '11', '14', '13'];
+            const randomNum = Math.floor(Math.random() * 6);
+            let picked = phones[randomNum];
+            const userM = await collectionOrders.updateOne({customerID: id}, {$set: {model: picked}});
+            console.log('Updated User Order Model: ' , userM.acknowledged);
+            const script = `
+            <script>
+                alert('Deleted User Printed In Console!');
+                window.location.href = '/';
+            </script>
+            `;
+            res.status(200).send(script);
+        }
+    }catch(error){
+        console.error('Error Updating User: ', error);
+        res.status(500).send('Error Updating User');
+    }
 });
 
 app.listen(8000, () => {
