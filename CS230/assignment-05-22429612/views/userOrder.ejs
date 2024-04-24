@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Order</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>ORDER</h1>
+            <form action="/userOrder" method="post">
+                <label for="userID">User ID: </label>
+                <input type="text" id="userID" name ='userID' placeholder="(e.g 66278f120386d5ec74899451)" required>
+                <label for="manufacturer">Manufacturer: </label>
+                <input type="text" id="manufacturer" name ='manufacturer' placeholder='iPhone' required>
+                <label for="model">Model: </label>
+                <input type="text" id="model" name ='model' placeholder="8, XR, 11, 13, 14, 15" required>
+                <br>
+                <button class ='createUserB' value="placeOrder" id="placeOrder" name="button" type="submit">Place Order</button>
+                <button class="createUserB" class='createB' style="margin-top: 10px;" value="exampleB" id="exampleB" name="button" type="submit">Example Order</button>
+            </form>
+        </div>
+
+        <script>    
+            const button = document.getElementById('exampleB');
+            const id = document.getElementById('userID');
+            const man = document.getElementById('manufacturer');
+            const mod = document.getElementById('model');
+            
+            button.addEventListener('click', () => {
+                id.removeAttribute('required');
+                man.removeAttribute('required');
+                mod.removeAttribute('required');
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Management Application</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div id="form" style="text-align: center;">
+            <form action="/updateUser/userData" method="get">
+                <button onclick="alertExample()" class="createMainB" id="updateD">UPDATE USER DATA</button>
+            </form>
+            <form action="/updateUser/userAddress" method="get">
+                <button onclick="alertExample()" class="createMainB" id="updateA">UPDATE USER ADDRESS</button>
+            </form>
+            <form action="/updateUser/userShippingAddress" method="get">
+                <button onclick="alertExample()" class="createMainB" id="updateS">UPDATE USER SHIPPING ADDRESS</button>
+            </form>
+        </div>
+        <script>    
+            function alertExample(){
+                alert('*NOTE* ANY EXAMPLE BUTTON DOESNT REQUIRE INPUT');
+            }
+        </script>
+    </body>
+</html>

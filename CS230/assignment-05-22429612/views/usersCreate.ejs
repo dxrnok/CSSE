@@ -8,7 +8,7 @@
     </head>
     <body>
         <div id="form">
-            <h1>Create User</h1>
+            <h1>CREATE USER</h1>
             <form action="/createUser" method="post">
                 <label for="title">Title:</label>
                 <select name="title" id="title" required>
@@ -29,9 +29,9 @@
                 <label for="sname">Surname:</label>
                 <input type="text" id="sname" name ='sname' required>
                 <label for="mobileNO">Mobile Number:</label>
-                <input type="text" id="mobileNO" name ='mobile' required>
+                <input type="text" id="mobileNO" name ='mobile' pattern='[0-9]{10}' placeholder='Number Length 10' required>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name ='email' required>
+                <input type="email" id="email" name ='email' pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,} placeholder='my.example@myapp.local' required>
                 <label for="address1">Address Line 1:</label>
                 <input type="text" id="address1" name ='address1' required>
                 <label for="address2">Address Line 2:</label>
@@ -45,10 +45,10 @@
                 <label for="ship">Other Shipping Address:</label>
                 <input type="checkbox" id="ship" name="ship" value="ship">
                 <br>
-                <button class ='createUserB' name="button" value="createUser" type="submit">Create User</button>
+                <button class ='createUserB' onclick="emailConvert()" name="button" value="createUser" type="submit">Create User</button>
             </form>
             <form action="/createUser" method="post">
-                <button class ='createUserB' style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
+                <button class ='createUserB' onclick="alertUsers()" style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
             </form>
         </div>
         
@@ -56,7 +56,7 @@
         <script>    
             const title = document.querySelectorAll("#title");
             const otherInput = document.getElementById("otherInput");
-            title.forEach((element) => {
+            title.forEach(element => {
                 element.addEventListener('change', () => {
                     if (element.value === "other") {
                         otherInput.style.visibility = "visible";
@@ -68,6 +68,18 @@
                     }
                 });
             });
+            const email = document.getElementById("email");
+            email.addEventListener('input', function(event) {
+                // Convert the input value to lowercase
+                const EmailtoLC = email.value.toLowerCase();
+                
+                // Update the input field value with the lowercase version
+                email.value = EmailtoLC;
+            });
+
+            function alertUsers(){
+                alert('*NOTE* ORDERS AND ADDRESSES ARE CREATED FOR 10 USERS');
+            }
         </script>
     </body>
 </html>

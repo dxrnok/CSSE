@@ -14,6 +14,7 @@ app.use(express.static(__dirname + '/public')); //loading in middelware from /pu
 let collectionUser;
 let collectionAddress;
 let collectionShip;
+let collectionOrders;
 
 //CODE TO CONNECT TO MONGODB (GIVEN IN ATLAS)
 const client = new MongoClient(connect.database.url, {
@@ -36,6 +37,7 @@ async function connection() {
         collectionUser = db.collection('USERS');
         collectionAddress = db.collection('ADDRESS');
         collectionShip = db.collection('SHIPPING');
+        collectionOrders = db.collection('ORDERS');
 
     } catch(error) {
         // Ensures that the client will close when you finish/error
@@ -54,6 +56,10 @@ app.get('/createUser', (req, res) => {
     res.render('usersCreate');
 });
 
+app.get('/userOrder', (req, res) => {
+    res.render('userOrder');
+});
+
 //render searchUser.ejs when GET request is made to /searchUser
 app.get('/searchUser', (req, res) => {
     res.render('searchUser');
@@ -66,9 +72,27 @@ app.get('/deleteUser', (req, res) => {
 
 //render shipping.ejs when GET request is made to /createUser/userShippingAddress
 app.get('/createUser/userShippingAddress', (req, res) => {
-    //res.sendFile(path.join(__dirname, '/usersCreate.ejs'));
     res.render('shipping');
 });
+
+//render updateUser.ejs when GET request is made to /updateUser
+app.get('/updateUser', (req, res) => {
+    res.render('updateUser');
+});
+//render updateData.ejs when GET request is made to /updateUser/userData
+app.get('/updateUser/userData', (req, res) => {
+    res.render('updateData');
+});
+//render userAddress.ejs when GET request is made to /updateUser/userAddress
+app.get('/updateUser/userAddress', (req, res) => {
+    res.render('userAddress');
+});
+
+//render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
+app.get('/updateUser/userShippingAddress', (req, res) => {
+    res.render('userShippingAddress');
+});
+
 let userIds;    //storing userID from USER CREATION
 
 //POST method for user creation
@@ -112,7 +136,19 @@ app.post('/createUser', async (req, res) => {
                 console.log('Shipping Address Inserted Successfully:', shipData);
             }
 
+            const phones = ['XR', '15', '8', '11', '14', '13'];
+            const randomNum = Math.floor(Math.random() * 5);
+            let picked = phones[randomNum];
+        
+            const order = await collectionOrders.insertOne({
+                customerID: userID,
+                manufacturer: 'iPhone',
+                model: picked
+            })
+            console.log('Order for User Placed:', order);
             //send a message and redirect to main page found similar example on stackoverflow to change page and alert
+            //this format will be used multiple times through out the code so i provided message here
+            //they all have the same intention just changed to satisfy part of code
             const script = `
                 <script>
                     alert('User created successfully!');
@@ -124,7 +160,6 @@ app.post('/createUser', async (req, res) => {
             //Successful status and exec script
             res.status(200).send(script);
         }else{
-
             //Store 10 users to data
             const users = [
                 { title: 'Ms', fname: 'Emily', sname: 'Randy', mobile: '8893030223', email: 'Emily.Randy@myapp.com'},
@@ -141,29 +176,51 @@ app.post('/createUser', async (req, res) => {
 
             const insert10Users = await collectionUser.insertMany(users);   //insert data into collection
 
-            userIds = await collectionUser.find({}).toArray();  //find and store user collection 
-                                                                //(couldnt find a working way to store _id for customerID)
-            //store 10 user addresses with same customerIDs from collection USERS _ids 
+            userIds = insert10Users.insertedIds;    //save all inserted ids 
+                                                    //(couldnt find a working way to store _id for customerID)
+            //store customerIDs so they match previously inserted into users collection
             const usersAddress = [
-                { customerID: userIds[0]._id, address1: '221 Fake View Park', town: 'Bikini Bottom', city: 'UnderWater'},
-                { customerID: userIds[1]._id, address1: '221 Fake View Park', town: 'Bikini Bottom', city: 'UnderWater'},
-                { customerID: userIds[2]._id, address1: '232 Hilton Drivers', town: 'Racing', city: 'Track'},
-                { customerID: userIds[3]._id, address1: '2456 Hidden Court', town: 'Hiders Town', city: 'Uptheroad'},
-                { customerID: userIds[4]._id, address1: '12 Mirror Park', town: 'LA', city: 'LA'},
-                { customerID: userIds[5]._id, address1: '1 Stevens Green Road', town: 'Diners', city: 'NightTown'},
-                { customerID: userIds[6]._id, address1: '33 River Cart', town: 'River Dogers', city: 'River Courts'},
-                { customerID: userIds[7]._id, address1: '111 Never End Road', town: 'Neverstown', city: 'Villa'},
-                { customerID: userIds[8]._id, address1: '344 Bin Road', town: 'French', city: 'Night'},
-                { customerID: userIds[9]._id, address1: '5656 One Road', town: 'Kinders', city: 'Germany'}
+                { customerID: userIds['0'], address1: '221 Fake View Park', town: 'Bikini Bottom', city: 'UnderWater'},
+                { customerID: userIds['1'], address1: '221 Fake View Park', town: 'Bikini Bottom', city: 'UnderWater'},
+                { customerID: userIds['2'], address1: '232 Hilton Drivers', town: 'Racing', city: 'Track'},
+                { customerID: userIds['3'], address1: '2456 Hidden Court', town: 'Hiders Town', city: 'Uptheroad'},
+                { customerID: userIds['4'], address1: '12 Mirror Park', town: 'LA', city: 'LA'},
+                { customerID: userIds['5'], address1: '1 Stevens Green Road', town: 'Diners', city: 'NightTown'},
+                { customerID: userIds['6'], address1: '33 River Cart', town: 'River Dogers', city: 'River Courts'},
+                { customerID: userIds['7'], address1: '111 Never End Road', town: 'Neverstown', city: 'Villa'},
+                { customerID: userIds['8'], address1: '344 Bin Road', town: 'French', city: 'Night'},
+                { customerID: userIds['9'], address1: '5656 One Road', town: 'Kinders', city: 'Germany'}
             ];
             //insert shipping address and home address for users
             const insert10Address = await collectionAddress.insertMany(usersAddress);
             const insert10ShipAddress = await collectionShip.insertMany(usersAddress);
 
+            const userOrders = [
+                { customerID: userIds['0'], manufacturer: 'iPhone', model: 'XR'},
+                { customerID: userIds['1'], manufacturer: 'iPhone', model: '11'},
+                { customerID: userIds['2'], manufacturer: 'iPhone', model: '15'},
+                { customerID: userIds['3'], manufacturer: 'iPhone', model: '14'},
+                { customerID: userIds['4'], manufacturer: 'iPhone', model: '8'},
+                { customerID: userIds['5'], manufacturer: 'iPhone', model: '8'},
+                { customerID: userIds['6'], manufacturer: 'iPhone', model: '14'},
+                { customerID: userIds['7'], manufacturer: 'iPhone', model: '14'},
+                { customerID: userIds['8'], manufacturer: 'iPhone', model: 'XR'},
+                { customerID: userIds['9'], manufacturer: 'iPhone', model: '11'}
+            ];
+            const insert10Ordres = await collectionOrders.insertMany(userOrders);
+            
             //log that everything went successfully
             console.log('Users Inserted Successfully:', insert10Users);
             console.log('Addresses Inserted Successfully:', insert10Address);
             console.log('Shipping Addresses Inserted Successfully:', insert10ShipAddress);
+            console.log('User Orders Inserted Successfullt:', insert10Ordres);
+
+            //clear userids to prevent file from getting too large
+            //and this will make sure that new entrys are added for new users
+            if(userIds.length > 0){
+                userIds.length = 0
+            }
+            
             const script = `
             <script>
                 alert('User created successfully!');
@@ -196,7 +253,7 @@ app.post('/createUser/userShippingAddress', async (req, res) => {
         //insert data into collection and log that it went successfully
         const shipData = await collectionShip.insertOne(dataAddress);
         console.log('User Data Inserted Successfully:', shipData);
-        //send a message and redirect to main page
+
         const script = `
             <script>
                 alert('User created successfully!');
@@ -218,7 +275,11 @@ app.post('/createUser/userShippingAddress', async (req, res) => {
 app.post('/searchUser', async (req, res) => {
     try{
         if(req.body.button === 'exampleB'){ //check button value
-            const user = await collectionUser.find({'fname': 'Xavi'}).toArray();    //user from 10 users inserted into the db
+            const user = await collectionUser.find({'fname': 'upsalala'}).toArray();    //user from 10 users inserted into the db
+            const userID = user[0]._id;
+            const userA = await collectionAddress.find({customerID: userID}).toArray();
+            const userS = await collectionShip.find({customerID: userID}).toArray();
+            const userO = await collectionOrders.find({customerID: userID}).toArray();
             const script = `
                     <script>
                         alert('User Found Printed in Console!');
@@ -227,6 +288,9 @@ app.post('/searchUser', async (req, res) => {
             `;
             res.status(200).send(script);
             console.log('Users found:', user);
+            console.log('Users Address:', userA);
+            console.log('Users Shippin Addres:', userS);
+            console.log('Users Orders:', userO);
         }else if(req.body.button === 'searchAllB'){ //check button value
             //i didnt print any user addresses or shipping addresses due to posssibility of having too much users.
             //you can search all users and then input their _id without ObjectId just what is in '', this will print user addresses
@@ -245,7 +309,7 @@ app.post('/searchUser', async (req, res) => {
                 fname: req.body.fname,
                 sname: req.body.sname,
             }
-            //initilize new query for search
+            //initilize new query for search based on input from web
             let query = {};
             if (userData.fname && userData.sname) {
                 query = {
@@ -263,19 +327,25 @@ app.post('/searchUser', async (req, res) => {
             }
 
             
-            const user = await collectionUser.find(query).toArray();
-            if (user.length === 1) {
-                console.log('Users Found: ', user.length);
+            const user = await collectionUser.find(query).toArray();    //find user(s) from collection
+            if (user.length === 1) {    // if there is only one user
+                console.log('User Found: ', user.length);
                 console.log('User Data: ', user);
-                const userId = user[0]._id;
+                const userId = user[0]._id; //get user id from user array
+                //newQuery for find()
                 let newQuery = {
-                    _id: userId
+                    customerID: userId
                 }
+                //find user address where customerID = _id from user collection
                 const address = await collectionAddress.find(newQuery).toArray();
                 console.log('User Address:', address);
-            
+
+                //find user ship address where customerID = _id from user collection
                 const shippingAddress = await collectionShip.find(newQuery).toArray();
                 console.log('User Shipping Address:', shippingAddress);
+
+                const userOrder = await collectionOrders.find(newQuery).toArray();
+                console.log('User Orders:', userOrder);
             
                 const script = `
                     <script>
@@ -283,25 +353,33 @@ app.post('/searchUser', async (req, res) => {
                         window.location.href = '/';
                     </script>
                 `;
-                res.status(500).send(script);
-            } else if (user.length > 1) {
+                res.status(200).send(script);
+            } else if (user.length > 1) {   //if there is more than one user found
                 console.log('Users Found:', user.length);
+
+                //this makes sure that all users will be logged into console
                 for (let i = 0; i < user.length; i++) {
-                    const userId = user[i]._id;
+                    const userId = user[i]._id; //update each user id from found users that matched
+
+                    //query for find() based on customer ID
                     let newQuery = {
                         customerID: userId
                     }
                     console.log('User ' + (i+1) + ' With ID: ', userId);
+
+                    //search for User with ID
                     const userSearchData = await collectionUser.find({_id: userId}).toArray();
                     console.log('User Data:', userSearchData);
 
-
+                    //search for user based from customerID based off query
                     const address = await collectionAddress.find(newQuery).toArray();
                     console.log('User ' + (i+1) + ' Address:', address);
-            
+                    
+                    //search for shipping address based from customerID based off query
                     const shippingAddress = await collectionShip.find(newQuery).toArray();
                     console.log('User ' + (i+1) + ' Shipping Address:', shippingAddress);
                 }
+                
                 const script = `
                     <script>
                         alert('User Found Printed in Console!');
@@ -326,29 +404,34 @@ app.post('/searchUser', async (req, res) => {
     }
 });
 
-app.post('/deleteUser', async (req, res) => {
+app.post('/userOrder', async (req, res) => {
     try{
         if(req.body.button === 'exampleB'){
             let script = `
                 <script>
-                    alert('Deleted User Printed To Console!');
-                    window.location.href = '/deleteUser';
+                    alert('Order Printed To Console!');
+                    window.location.href = '/';
                 </script>
             `;
-            let code = 200;
+            let code = 200; //used to for sending successful/error message in web
             
-            const idIns = await collectionUser.find({}).toArray();
-            if(idIns.length > 0){
-                const userObj = idIns[0]._id;
-                console.log(userObj);
-                const deleteUser = await collectionUser.deleteOne({_id: userObj});
-                const deleteUserA = await collectionAddress.deleteOne({customerID: userObj});
-                const deleteUserS = await collectionShip.deleteOne({customerID: userObj});
+            const idIns = await collectionUser.find({}).toArray();  //find ids from database
+
+            if(idIns.length > 0){   //check if any there id was found 
+                const userObj = idIns[0]._id;   //store id
+                const phones = ['XR', '15', '8', '11', '14', '13'];
+                const randomNum = Math.floor(Math.random() * 5);
+                let picked = phones[randomNum];
+
+                const order = {
+                    customerID: userObj,
+                    manufacturer: 'iPhone',
+                    model: picked
+                }
+                //execution of deleting from databases when id is mathced
+                const userOrder = await collectionUser.insertOne(order);
                 
-                const objToString = userObj.toString()
-                console.log('Users Deleted With ID: Object(' + objToString +')' , deleteUser);
-                console.log('Users Address Deleted With ID: Object(' + objToString +')' , deleteUserA);
-                console.log('Users Shippng Address Deleted With ID: Object(' + objToString +')' , deleteUserS);
+                console.log('Placed Order For User: ', userOrder);
             }else{
                 console.log("There Are No Users In Database");
                 script = `
@@ -361,7 +444,71 @@ app.post('/deleteUser', async (req, res) => {
                 //res.status(500).send(script);
             }
             res.status(code).send(script);
-        }else if(req.body.button === 'deleteAllB'){
+        }else{
+            const idIn = new ObjectId(req.body.userID);
+            const userData = {
+                customerID: idIn,
+                manufacturer: req.body.manufacturer,
+                model: req.body.model
+            }
+
+            const userOrder = await collectionOrders.insertOne(userData);    //find user(s) from collection
+            console.log('Placed Order For User: ', userOrder);
+            let script = `
+                <script>
+                    alert('Order Printed To Console!');
+                    window.location.href = '/';
+                </script>
+            `;
+            res.status(200).send(script);
+        }
+    }catch(error){
+        console.error('Error Placing Order: ', error);
+        res.status(500).send('Error Placing Order');
+    }
+});
+
+//POST method for deletion of users
+app.post('/deleteUser', async (req, res) => {
+    try{
+        if(req.body.button === 'exampleB'){ //check if button clicked value 
+            let script = `
+                <script>
+                    alert('Deleted User Printed To Console!');
+                    window.location.href = '/deleteUser';
+                </script>
+            `;
+            let code = 200; //used to for sending successful/error message in web
+            
+            const idIns = await collectionUser.find({}).toArray();  //find ids from database
+
+            if(idIns.length > 0){   //check if any there id was found 
+                const userObj = idIns[0]._id;   //store id
+                
+                //execution of deleting from databases when id is mathced
+                const deleteUser = await collectionUser.deleteOne({_id: userObj});
+                const deleteUserA = await collectionAddress.deleteOne({customerID: userObj});
+                const deleteUserS = await collectionShip.deleteOne({customerID: userObj});
+                const deleteUserO = await collectionOrders.deleteOne({customerID: userObj});
+                
+                const objToString = userObj.toString(); //change id into string
+                console.log('Users Deleted With ID: ',  objToString , deleteUser);
+                console.log('Users Address Deleted With ID: ', objToString, deleteUserA);
+                console.log('Users Shippng Address Deleted With ID: ', objToString, deleteUserS);
+                console.log('Users Orders With ID: ', objToString, deleteUserO);
+            }else{
+                console.log("There Are No Users In Database");
+                script = `
+                    <script>
+                        alert('No Users Found In Database!');
+                        window.location.href = '/deleteUser';
+                    </script>
+                `;
+                code = 500;
+                //res.status(500).send(script);
+            }
+            res.status(code).send(script);
+        }else if(req.body.button === 'deleteAllB'){ //check button value (this is used to delete ALL user+data from collections)
             await collectionUser.deleteMany({});
             await collectionAddress.deleteMany({});
             await collectionShip.deleteMany({});
@@ -374,15 +521,19 @@ app.post('/deleteUser', async (req, res) => {
             res.status(200).send(script);
             console.log('Database Cleared!');
         }else{
-            const idIn = new ObjectId(req.body.userID);
-            if(Object.values(idIn).length > 0){
-                console.log(idIn);
+            const idIn = new ObjectId(req.body.userID); //store id inserted from web into mongoDB new ObjectId
+            if(Object.values(idIn).length > 0){ //check if id was provided by user
+                //execute deleting from collections
                 const deleteUser = await collectionUser.deleteOne({_id: idIn});
                 const deleteUserA = await collectionAddress.deleteOne({customerID : idIn});
                 const deleteUserS = await collectionShip.deleteOne({customerID : idIn});
+                const deleteUserO = await collectionOrders.deleteOne({customerID : idIn});
+
+                //log all deletion
                 console.log('Deleted User With ID:', idIn, deleteUser);
                 console.log('Deleted User Address With ID:', idIn, deleteUserA);
                 console.log('Deleted User Shipping Address With ID:', idIn, deleteUserS);
+                console.log('Deleted User Orders With ID:', idIn, deleteUserO);
 
                 const script = `
                     <script>
@@ -406,11 +557,83 @@ app.post('/deleteUser', async (req, res) => {
         console.error('Error Deleting User: ', error);
         res.status(500).send('Error Deleting User');
     }
-})
+});
 
-function createObjectId(idString) {
-    return ObjectId(idString);
-}
+app.post('/updateUser/userData', async (req, res) => {
+    try{
+        if(req.body.button === 'updateData'){
+            const id = req.body.userID;
+            if(id.length === 24){
+                const idIn = new ObjectId(req.body.userID);
+
+                //set all inputs to seperate consts
+                const t = req.body.title;
+                const fn = req.body.fname;
+                const sn = req.body.sname;
+                const mo = req.body.mobile;
+                const em = req.body.email;
+                const updateQueryData = {};
+
+                //if input is not empty place it into query
+                if(t !== ''){
+                    updateQueryData.title = t;
+                }
+                if(fn !== ''){
+                    updateQueryData.fname = fn;
+                }
+                if(sn !== ''){
+                    updateQueryData.sname = sn;
+                }
+                if(mo !== ''){
+                    updateQueryData.mobile = mo;
+                }
+                if(em !== ''){
+                    updateQueryData.email = em;
+                }
+
+                //update users data
+                const userUpdate = await collectionUser.updateOne({_id: idIn}, {$set: updateQueryData});
+                console.log('Updated User Data: ' , userUpdate);
+    
+                const script = `
+                <script>
+                    alert('Deleted User Printed In Console!');
+                    window.location.href = '/deleteUser';
+                </script>
+                `;
+                res.status(200).send(script);
+            }else{
+                const script = `
+                    <script>
+                        alert('User ID must be 24 characters!');
+                        window.location.href = '/updateUser/userData';
+                    </script>
+                `;
+                console.log('No User Data Updated!');
+                res.status(500).send(script);
+            }
+        }else{
+            const userUpdate = await collectionUser.updateOne({_id: idIn}, {$set: updateQuery});
+        }
+    }catch(error){
+        console.error('Error Updating User: ', error);
+        res.status(500).send('Error Updating User');
+    }
+
+});
+//render updateData.ejs when GET request is made to /updateUser/userData
+app.get('/updateUser/userData', (req, res) => {
+    res.render('updateData');
+});
+//render userAddress.ejs when GET request is made to /updateUser/userAddress
+app.get('/updateUser/userAddress', (req, res) => {
+    res.render('userAddress');
+});
+
+//render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
+app.get('/updateUser/userShippingAddress', (req, res) => {
+    res.render('userShippingAddress');
+});
 
 app.listen(8000, () => {
     console.log('Server Started On Port 8000');

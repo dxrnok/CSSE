@@ -84,7 +84,7 @@ input:required:invalid, select:required:invalid {
 	border-radius: 5px;
 	margin-top: 3px;
 	text-align: center;
-	width: fit-content;
+	width: 100%;
     font-family: sans-serif;
 	height: 30px;
 	padding: 0 10px;
@@ -99,6 +99,7 @@ input:required:invalid, select:required:invalid {
 	margin: auto;
     display: inline-block;
     font-family: sans-serif;
+	width: 90%;
 	margin-top: 7px;
 	height: 50px;
 	padding: 0 10px;
