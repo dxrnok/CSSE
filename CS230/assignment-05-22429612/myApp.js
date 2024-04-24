@@ -11,6 +11,7 @@ app.use(express.urlencoded({extended: false}));
 app.set('view engine', 'ejs');  //setting view engine for my dynmaic web 
                                 //(found during research on stack overflow)
 app.use(express.static(__dirname + '/public')); //loading in middelware from /public
+//__dirname: path of the directory containing the file executed (i.e. myApp.js).
 
 //DECLARING COLLECTIONS
 let collectionUser;
