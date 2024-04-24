@@ -13,12 +13,14 @@
                 <label for="userID">User ID: </label>
                 <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
                 <label for="manufacturer">Manufacturer: </label>
-                <input type="text" id="manufacturer" name ='manufacturer' placeholder='iPhone' required>
+                <input type="text" id="manufacturer" name ='manufacturer' placeholder='iPhone'>
                 <label for="model">Model: </label>
-                <input type="text" id="model" name ='model' placeholder="8, XR, 11, 13, 14, 15" required>
+                <input type="text" id="model" name ='model' placeholder="8, XR, 11, 13, 14, 15">
                 <br>
-                <button class ='createUserB' value="placeOrder" id="placeOrder" name="button" type="submit">Update Order</button>
-                <button class="createUserB" class='createB' style="margin-top: 10px;" value="exampleB" id="exampleB" name="button" type="submit">Example Update</button>
+                <button class ='createUserB' name="button" value="updateOrder" type="submit">Update Order</button>
+            </form>
+            <form action="/updateUser/order" method="post">
+                <button class="createUserB" style="margin-top: 10px;" value="exampleB" name="button" type="submit">Example Update</button>
             </form>
         </div>
 
@@ -28,6 +30,7 @@
             const man = document.getElementById('manufacturer');
             const mod = document.getElementById('model');
             
+            //same approach as userOrder.ejs
             button.addEventListener('click', () => {
                 id.removeAttribute('required');
                 man.removeAttribute('required');

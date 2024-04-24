@@ -50,12 +50,13 @@
             <form action="/createUser" method="post">
                 <button class ='createUserB' onclick="alertUsers()" style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create 10 Random Users</button>
             </form>
-        </div>
-        
+        </div>  
 
         <script>    
             const title = document.querySelectorAll("#title");
             const otherInput = document.getElementById("otherInput");
+
+            //Making sure to make input field visible and required when title == other
             title.forEach(element => {
                 element.addEventListener('change', () => {
                     if (element.value === "other") {
@@ -68,9 +69,10 @@
                     }
                 });
             });
+
+            //converts email to lowercase
             const email = document.getElementById("email");
             email.addEventListener('input', function(event) {
-                // Convert the input value to lowercase
                 const EmailtoLC = email.value.toLowerCase();
                 
                 // Update the input field value with the lowercase version

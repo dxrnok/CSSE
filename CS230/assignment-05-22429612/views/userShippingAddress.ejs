@@ -28,23 +28,5 @@
                 <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
             </form>
         </div>
-        
-
-        <script>    
-            const title = document.querySelectorAll("#title");
-            const otherInput = document.getElementById("otherInput");
-            title.forEach((element) => {
-                element.addEventListener('change', () => {
-                    if (element.value === "other") {
-                        otherInput.style.visibility = "visible";
-                        otherInput.setAttribute('required', true);
-                    } else {
-                        otherInput.style.visibility = "hidden";
-                        otherInput.removeAttribute('required');
-                        otherInput.value = '';
-                    }
-                });
-            });
-        </script>
     </body>
 </html>

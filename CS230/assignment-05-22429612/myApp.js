@@ -1,13 +1,15 @@
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
-const connect = require('./connection/atlas_connect');
-const path = require('path');
+const connect = require('./connection/atlas_connect');  //connection uri for atlas
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
 
+//both below are middleware used for post methods
+//server can then accept or store these in data (object)
+app.use(express.json());    
+app.use(express.urlencoded({extended: false})); 
 
-app.set('view engine', 'ejs');  //setting view engine for my dynmaic web (found during research on stack overflow)
+app.set('view engine', 'ejs');  //setting view engine for my dynmaic web 
+                                //(found during research on stack overflow)
 app.use(express.static(__dirname + '/public')); //loading in middelware from /public
 
 //DECLARING COLLECTIONS
@@ -104,8 +106,9 @@ let userIds;    //storing userID from USER CREATION
 app.post('/createUser', async (req, res) => {
     try{
         if(req.body.button === 'createUser'){   //check button clicked value
+                                                //lines with req.body use the middleware stated at line 7,8
 
-            //store all User information provided from web to data
+            //store all User information data
             const dataUser = {
                 title: req.body.title === 'other' ? req.body.otherInput : req.body.title,
                 fname: req.body.fname,
@@ -246,7 +249,6 @@ app.post('/createUser', async (req, res) => {
 //POST method for user shipping address creation
 app.post('/createUser/userShippingAddress', async (req, res) => {
     try{
-        //store data from web
         const dataAddress = {
             customerID: userID,
             address1: req.body.address1,
@@ -309,7 +311,7 @@ app.post('/searchUser', async (req, res) => {
             res.status(200).send(script);
             console.log('Users found:', user);
         }else{
-            //store from web
+            //store into data
             const userData = {
                 fname: req.body.fname,
                 sname: req.body.sname,
@@ -530,7 +532,7 @@ app.post('/deleteUser', async (req, res) => {
             res.status(200).send(script);
             console.log('Database Cleared!', ' Deleted Amount: ', all);
         }else{
-            const idIn = new ObjectId(req.body.userID); //store id inserted from web into mongoDB new ObjectId
+            const idIn = new ObjectId(req.body.userID); //store id into mongoDB new ObjectId
             if(Object.values(idIn).length > 0){ //check if id was provided by user
                 //execute deleting from collections
                 const deleteUser = await collectionUser.deleteOne({_id: idIn});
@@ -823,10 +825,10 @@ app.post('/updateUser/order', async (req, res) => {
                 const updateQueryData = {};
 
                 //if input is not empty place it into query
-                if(a1 !== ''){
+                if(manu !== ''){
                     updateQueryData.manufacturer = manu;
                 }
-                if(a2 !== ''){
+                if(model !== ''){
                     updateQueryData.model = model;
                 }
 
