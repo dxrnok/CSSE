@@ -876,3 +876,16 @@ app.post('/updateUser/order', async (req, res) => {
 app.listen(8000, () => {
     console.log('Server Started On Port 8000');
 });
+
+//DATABASE
+//For my database structure i went for making separate documents for follwoing:
+//ADDRESS, USERS, SHIPPING ADDRESS, ORDERS, PHONES.
+//I made sure to create a key customerID which then was stored into a variable in code
+//and stored into each collection. This allowed me to aviod document embedding in one collection
+
+//IMPACT ON CODE DEVELOPMENT
+//This database approach allowed me to easily add addresses without embedding documents into one collection
+//which could cause one collection being huge for a simple fact that each user could have multiple orders
+//I believe this way saved me some time because for embedding documents it could be easier to make
+//a mistake without noticing. Here i just made user to properly allocate data into each collection
+//Overall my coding approach could have been simple as CRUD could have been done through a terminal
