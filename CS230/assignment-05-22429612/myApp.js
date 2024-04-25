@@ -317,7 +317,7 @@ app.post('/searchUser', async (req, res) => {
                 fname: req.body.fname,
                 sname: req.body.sname,
             }
-            //initilize new query for search based on input from web
+            //initilize new query for search based on data sent in
             let query = {};
             if (userData.fname && userData.sname) {
                 query = {
