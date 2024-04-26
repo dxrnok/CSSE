@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Creation</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div id="form">
+            <h1>CREATE USER</h1>
+            <form id="createU">
+                <label for="title">Title:</label>
+                <select name="title" id="title" required>
+                    <option></option>
+                    <option value="mx">Mx</option>
+                    <option value="ms">Ms</option>
+                    <option value="mr">Mr</option>
+                    <option value="mrs">Mrs</option>
+                    <option value="miss">Miss</option>
+                    <option value="dr">Dr</option>
+                    <option value="other">Other (Specify)</option>
+                </select>
+                <label for="other"></label>
+                <input type="text" id="otherInput" name ='otherInput' placeholder="Prof" required>
+                
+                <label for="fname">First Name(s):</label>
+                <input type="text" id="fname" name ='fname' required>
+                <label for="sname">Surname:</label>
+                <input type="text" id="sname" name ='sname' required>
+                <label for="mobileNO">Mobile Number:</label>
+                <input type="text" id="mobileNO" name ='mobile' pattern='[0-9]{10}' placeholder='Number Length 10' required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name ='email' placeholder='my.example@myapp.local' required>
+                <label for="address1">Address Line 1:</label>
+                <input type="text" id="address1" name ='address1' required>
+                <label for="address2">Address Line 2:</label>
+                <input type="text" id="address2" name ='address2'>
+                <label for="town">City/Town:</label>
+                <input type="text" id="town" name ='town' required>
+                <label for="city">County:</label>
+                <input type="text" id="city" name ='city' required>
+                <label for="eircode">Eircode:</label>
+                <input type="text" id="eircode" name ='eircode'>
+                <label for="ship">Other Shipping Address:</label>
+                <input type="checkbox" id="ship" name="ship" value="ship">
+                <br>
+                <button class ='createUserB' id='createB' onclick="emailConvert()" name="button" value="createUser" type="submit">Create User</button>
+            </form>
+            <form id = 'createExample'>
+                <button class ='createUserB' id = 'createExample'  style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create Random User</button>
+            </form>
+        </div>  
+
+        <script>   
+            $(document).ready(function () {
+                $('#createU').submit(function (e) {
+                    var titleField;
+                    var ship = $('#ship:checkbox:checked').length > 0;
+                    if ($('#title').val() === 'other') {
+                        titleField = $('#otherInput').val(); // Use otherInput value if 'other' selected
+                    } else {
+                        titleField = $('#title').val(); // Use title value otherwise
+                    }
+                    var user = {
+                        title: titleField,
+                        fname:      $('input[name=fname]').val(),
+                        sname:      $('input[name=sname]').val(),
+                        mobile:     $('input[name=mobile]').val(),
+                        email:      $('input[name=email]').val(),
+                        address1:   $('input[name=address1]').val(), 
+                        address2:   $('input[name=address2]').val(), 
+                        town:       $('input[name=town]').val(),  
+                        city:       $('input[name=city]').val(), 
+                        eircode:    $('input[name=eircode]').val(), 
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createUser',
+                        data: user,
+                        success: function (response) {
+                            alert('User created successfully.'); // Display response message
+                            window.location.href = '/';
+                        },
+                        error: function () {
+                            alert('Error creating user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            $('#title').val('');
+                            $('#otherInput').val('');
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                            mobile:     $('input[name=mobile]').val('');
+                            email:      $('input[name=email]').val('');
+                            address1:   $('input[name=address1]').val(''); // Reset address1 field
+                            address2:   $('input[name=address2]').val(''); // Reset address2 field
+                            town:       $('input[name=town]').val('');     // Reset town field
+                            city:       $('input[name=city]').val('');     // Reset city field
+                            eircode:    $('input[name=eircode]').val(''); 
+                            if (ship) {
+                                window.location.href = '/createUser/shippingAddress'; // Change '/nextPage' to the actual URL of the next page
+                            }
+                            // show confirmation message from API
+                            //showUserModal(data);
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+                $('#createExample').submit(function (e) {
+                    var user = {
+                        title: 'Mr',
+                        fname: 'Barry',
+                        sname: 'Hoppkins',
+                        mobile: '1234567890',
+                        email: 'barry.hoppkins@gmail.com',
+                        address1: 'EXAMPLE', 
+                        address2: 'EXAMPLE',
+                        town: 'EXAMPLE',
+                        city: 'EXAMPLE',
+                        eircode: 'EXAMPLE'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createUser',
+                        data: user,
+                        success: function (response) {
+                            alert('User created successfully.'); // Display response message
+                        },
+                        error: function () {
+                            alert('Error creating user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            $('#title').val('');
+                            $('#otherInput').val('');
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                            mobile:     $('input[name=mobile]').val('');
+                            email:      $('input[name=email]').val('');
+                            address1:   $('input[name=address1]').val(''); // Reset address1 field
+                            address2:   $('input[name=address2]').val(''); // Reset address2 field
+                            town:       $('input[name=town]').val('');     // Reset town field
+                            city:       $('input[name=city]').val('');     // Reset city field
+                            eircode:    $('input[name=eircode]').val('');  // Reset eircode field
+                            // show confirmation message from API
+                            //showUserModal(data);
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+            });
+
+            const title = document.querySelectorAll("#title");
+            const otherInput = document.getElementById("otherInput");
+
+            //Making sure to make input field visible and required when title == other
+            title.forEach(element => {
+                element.addEventListener('change', () => {
+                    if (element.value === "other") {
+                        otherInput.style.visibility = "visible";
+                        otherInput.setAttribute('required', true);
+                    } else {
+                        otherInput.style.visibility = "hidden";
+                        otherInput.removeAttribute('required');
+                        otherInput.value = '';
+                    }
+                });
+            });
+
+            //converts email to lowercase
+            function emailConvert() {
+            // Code to convert email address to lowercase
+            const email = document.getElementById("email");
+            email.value = email.value.toLowerCase();
+        }
+
+
+            function alertUsers(){
+                alert('*NOTE* ORDERS AND ADDRESSES ARE CREATED FOR 10 USERS');
+            }
+        </script>
+    </body>
+</html>
