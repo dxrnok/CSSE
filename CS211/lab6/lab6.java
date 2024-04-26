@@ -1,9 +1,9 @@
 package CS211.lab6;
 public class lab6 {
     public static void main(String[] args){
-        long x = 2000000000;
+        long x = 1;
         int count = 1, countMax = 0;
-        while(x < 2020000000 ){
+        while(x < 1000 ){
             count = 1;
             while(numCheck(x, 0) == numCheck(x+1, 0)){
                 count++;
@@ -12,7 +12,6 @@ public class lab6 {
             if(count > countMax){
                 countMax = count;
             }
-            System.out.println();
             x++;
         }
         System.out.println(countMax);

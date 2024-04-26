@@ -9,20 +9,83 @@
     </head>
     <body>
         <div id="form" style="text-align: center;">
-            <form action="/updateUser/data" method="get">
+            <form id="updateD">
                 <button onclick="alertExample()" class="createMainB" id="updateD">UPDATE USER DATA</button>
             </form>
-            <form action="/updateUser/order" method="get">
+            <form id="updateO">
                 <button onclick="alertExample()" class="createMainB" id="updateS">UPDATE USER ORDER</button>
             </form>
-            <form action="/updateUser/address" method="get">
+            <form id="updateA">
                 <button onclick="alertExample()" class="createMainB" id="updateA">UPDATE USER ADDRESS</button>
             </form>
-            <form action="/updateUser/shippingAddress" method="get">
+            <form id="updateS">
                 <button onclick="alertExample()" class="createMainB" id="updateS">UPDATE USER SHIPPING ADDRESS</button>
             </form>
         </div>
         <script>    
+        $(document).ready(function () {
+                // Handle form submission
+                $('#updateD').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    // AJAX POST request to create user
+                    $.ajax({
+                        type: 'GET',
+                        url: '/updateUser/data',
+                        success: function (response) {
+                            window.location.href = "/updateUser/data"; // Display response message
+                        },
+                        error: function () {
+                            alert('Error updating user.'); // Display error message
+                        }
+                    });
+                });
+                $('#updateO').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    // AJAX POST request to create user
+                    $.ajax({
+                        type: 'GET',
+                        url: '/updateUser/order',
+                        success: function (response) {
+                            window.location.href = "/updateUser/order"; // Display response message
+                        },
+                        error: function () {
+                            alert('Error updating user.'); // Display error message
+                        }
+                    });
+                });
+                $('#updateA').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    // AJAX POST request to create user
+                    $.ajax({
+                        type: 'GET',
+                        url: '/updateUser/address',
+                        success: function (response) {
+                            window.location.href = "/updateUser/address"; // Display response message
+                        },
+                        error: function () {
+                            alert('Error updating address.'); // Display error message
+                        }
+                    });
+                });
+                $('#updateS').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    // AJAX POST request to create user
+                    $.ajax({
+                        //type: 'GET',
+                        url: '/updateUser/shippingAddress',
+                        success: function (response) {
+                            window.location.href = "/updateUser/shippingAddress"; // Display response message
+                        },
+                        error: function () {
+                            alert('Error updating shipping address.'); // Display error message
+                        }
+                    });
+                });
+            });
             function alertExample(){
                 alert('*NOTE* ANY EXAMPLE BUTTON DOESNT REQUIRE INPUT');
             }

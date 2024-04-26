@@ -4,12 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Update Data</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <div id="form">
             <h1>UPDATE DATA</h1>
-            <form action="/updateUser/data" method="post">
+            <form id="updateF">
                 <label for="userID">User ID: </label>
                 <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
                 <label for="title">Title:</label>
@@ -33,15 +34,113 @@
                 <input type="text" id="mobileNO" name ='mobile'>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name ='email'>
-                <button class ='createUserB' name="button" value="updateData" type="submit">Update User</button>
+                <button class ='createUserB' id="updateData" type="submit">Update User</button>
             </form>
-            <form action="/updateUser/data" method="post">
+            <form id="updateE">
                 <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
             </form>
         </div>
         
         
         <script>
+            $(document).ready(function () {
+                $('#updateF').submit(function (e) {
+                    var t;
+                    if ($('#title').val() === 'other') {
+                        t = $('#otherInput').val(); // Use otherInput value if 'other' selected
+                    } else {
+                        t = $('#title').val(); // Use title value otherwise
+                    }
+                    const _id = $('input[name=userID]').val()
+                    //const t = ('#title').val() === 'other' ? $('#otherInput').val() : $('#title').val();
+                    const fn = $('input[name=fname]').val();
+                    const sn = $('input[name=sname]').val();
+                    const mo = $('input[name=mobile]').val();
+                    const em = $('input[name=email]').val();
+
+                    var user ={};
+                    if(_id !== ''){
+                        user._id = _id;
+                    }
+                    if(t !== ''){
+                        user.title = t;
+                    }
+                    if(fn !== ''){
+                        user.fname = fn;
+                    }
+                    if(sn !== ''){
+                        user.sname = sn;
+                    }
+                    if(mo !== ''){
+                        user.mobile = mo;
+                    }
+                    if(em !== ''){
+                        user.email = em;
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/updateUser/data',
+                        data: user,
+                        success: function (response) {
+                            alert('User updated successfully.'); // Display response message
+                            window.location.href = '/';
+                        },
+                        error: function () {
+                            alert('Error updating user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            $('#title').val('');
+                            $('#otherInput').val('');
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                            mobile:     $('input[name=mobile]').val('');
+                            email:      $('input[name=email]').val('');
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+                $('#createExample').submit(function (e) {
+                    var user = {
+                        title: 'Mr',
+                        fname: 'Barry',
+                        sname: 'Hoppkins',
+                        mobile: '1234567890',
+                        email: 'barry.hoppkins@gmail.com',
+                        address1: 'EXAMPLE', 
+                        address2: 'EXAMPLE',
+                        town: 'EXAMPLE',
+                        city: 'EXAMPLE',
+                        eircode: 'EXAMPLE'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/userUpdate/data',
+                        data: user,
+                        success: function (response) {
+                            alert('User created successfully.'); // Display response message
+                        },
+                        error: function () {
+                            alert('Error creating user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            $('#title').val('');
+                            $('#otherInput').val('');
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                            mobile:     $('input[name=mobile]').val('');
+                            email:      $('input[name=email]').val('');
+                            // show confirmation message from API
+                            //showUserModal(data);
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+            });
+
             //same approach as userCreate.ejs    
             const title = document.querySelectorAll("#title");
             const otherInput = document.getElementById("otherInput");

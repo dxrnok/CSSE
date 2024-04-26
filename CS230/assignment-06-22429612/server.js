@@ -237,11 +237,11 @@ server.on("request", function (request, response) {
                     };
                     response.writeHead(200, headers);
                     response.end(
-                        "User (" +
+                        /* "User (" +
                         userData.fname +
                         " " +
                         userData.sname +
-                        ") data added to the Database!"
+                        ") data added to the Database!" */
                     );
                 });
                 // Handle a GET request;  the user is requesting user data via AJAX!
@@ -249,7 +249,85 @@ server.on("request", function (request, response) {
                 // extracted from the database and returned to the user as JSON!
             }
         break;
-  }
+        
+        case "/updateUser":
+            if(currentMethod == 'GET'){
+            fs.readFile(__dirname + "/html/updateUser.html", function (err, data) {
+                // get the file and add to data
+                var headers = {
+                // set the appropriate headers
+                "Content-Type": "text/html",
+                };
+                response.writeHead(200, headers);
+                response.end(data); // return the data (index.html)
+            }); // as part of the response
+            // Handle a POST request;  the user is sending user data via AJAX!
+            // This is the CRUD (C)reate request. These data need to be
+            // extracted from the POST request and saved to the database!
+            }
+        break;
+
+        case "/updateUser/data":
+            if(currentMethod == 'GET'){
+            fs.readFile(__dirname + "/html/updateData.html", function (err, data) {
+                // get the file and add to data
+                var headers = {
+                // set the appropriate headers
+                "Content-Type": "text/html",
+                };
+                response.writeHead(200, headers);
+                response.end(data); // return the data (index.html)
+            }); // as part of the response
+            // Handle a POST request;  the user is sending user data via AJAX!
+            // This is the CRUD (C)reate request. These data need to be
+            // extracted from the POST request and saved to the database!
+            }else if (currentMethod === "POST") {
+                // read the body of the POST request
+                request.on("data", function (chunk) {
+                    requestBody += chunk.toString();
+                });
+
+                // determine the POST request Content-type (and log to console)
+                // Either: (i)  application/x-www-form-urlencoded or (ii) application/json
+                const { headers } = request;
+                let ctype = headers["content-type"];
+                console.log("RECEIVED Content-Type: " + ctype + "\n");
+
+                // finished reading the body of the request
+                request.on("end", async function () {
+                    var userData = "";
+                    // saving the user from the body to the database
+                    if (ctype.match(new RegExp('^application/x-www-form-urlencoded'))) {
+                        userData = querystring.parse(requestBody);
+                    } else {
+                        userData = JSON.parse(requestBody);
+                    }
+
+                    // log the user data to console
+                    console.log(
+                        "USER SHIPPING ADDRESS RECEIVED: \n\n" +
+                        JSON.stringify(userData, null, 2) +
+                        "\n"
+                    );
+                    // respond to the user with confirmation message
+                    var headers = {
+                        "Content-Type": "text/plain",
+                    };
+                    response.writeHead(200, headers);
+                    response.end(
+                        /* "User (" +
+                        userData.fname +
+                        " " +
+                        userData.sname +
+                        ") data added to the Database!" */
+                    );
+                });
+                // Handle a GET request;  the user is requesting user data via AJAX!
+                // This is the CRUD (R)etrieve request. These data need to be
+                // extracted from the database and returned to the user as JSON!
+            }
+        break;
+    }
 });
 
 // Set up the HTTP server and listen on port 8000
