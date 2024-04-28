@@ -15,12 +15,12 @@
                 <label for="title">Title:</label>
                 <select name="title" id="title" required>
                     <option></option>
-                    <option value="mx">Mx</option>
-                    <option value="ms">Ms</option>
-                    <option value="mr">Mr</option>
-                    <option value="mrs">Mrs</option>
-                    <option value="miss">Miss</option>
-                    <option value="dr">Dr</option>
+                    <option value="Mx">Mx</option>
+                    <option value="Ms">Ms</option>
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Dr">Dr</option>
                     <option value="other">Other (Specify)</option>
                 </select>
                 <label for="other"></label>
@@ -57,15 +57,13 @@
         <script>   
             $(document).ready(function () {
                 $('#createU').submit(function (e) {
-                    var titleField;
                     var ship = $('#ship:checkbox:checked').length > 0;
-                    if ($('#title').val() === 'other') {
-                        titleField = $('#otherInput').val(); // Use otherInput value if 'other' selected
-                    } else {
-                        titleField = $('#title').val(); // Use title value otherwise
+                    var checkedBox = 'no';
+                    if(ship){
+                        checkedBox = 'yes'
                     }
                     var user = {
-                        title: titleField,
+                        title: $('#title').val() === 'other' ? $('#otherInput').val() : $('#title').val(),
                         fname:      $('input[name=fname]').val(),
                         sname:      $('input[name=sname]').val(),
                         mobile:     $('input[name=mobile]').val(),
@@ -75,6 +73,7 @@
                         town:       $('input[name=town]').val(),  
                         city:       $('input[name=city]').val(), 
                         eircode:    $('input[name=eircode]').val(), 
+                        checked: checkedBox
                     };
                     $.ajax({
                         type: 'POST',
@@ -102,26 +101,16 @@
                             city:       $('input[name=city]').val('');     // Reset city field
                             eircode:    $('input[name=eircode]').val(''); 
                             if (ship) {
-                                window.location.href = '/createUser/shippingAddress'; // Change '/nextPage' to the actual URL of the next page
+                                //if checkbox true then redirect
+                                window.location.href = '/createUser/shippingAddress'; 
                             }
-                            // show confirmation message from API
-                            //showUserModal(data);
                         });
-                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                        e.preventDefault(); // when method is called, the default action of the event will not be triggered.
                                         // meand that clicked submit button will not take the browser to a new URL.
                 }); 
                 $('#createExample').submit(function (e) {
                     var user = {
-                        title: 'Mr',
-                        fname: 'Barry',
-                        sname: 'Hoppkins',
-                        mobile: '1234567890',
-                        email: 'barry.hoppkins@gmail.com',
-                        address1: 'EXAMPLE', 
-                        address2: 'EXAMPLE',
-                        town: 'EXAMPLE',
-                        city: 'EXAMPLE',
-                        eircode: 'EXAMPLE'
+                        button: 'example'
                     };
                     $.ajax({
                         type: 'POST',
@@ -174,10 +163,10 @@
 
             //converts email to lowercase
             function emailConvert() {
-            // Code to convert email address to lowercase
-            const email = document.getElementById("email");
-            email.value = email.value.toLowerCase();
-        }
+                // Code to convert email address to lowercase
+                const email = document.getElementById("email");
+                email.value = email.value.toLowerCase();
+            }
 
 
             function alertUsers(){

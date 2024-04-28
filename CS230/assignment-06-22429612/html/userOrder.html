@@ -4,12 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User Order</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body id="formBody">
         <div id="form">
             <h1>CREATE ORDER</h1>
-            <form action="/userOrder" method="post">
+            <form id="placeOrder">
                 <label for="userID">User ID: </label>
                 <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
                 <label for="manufacturer">Manufacturer: </label>
@@ -18,11 +19,69 @@
                 <input type="text" id="model" name ='model' placeholder="8, XR, 11, 13, 14, 15" required>
                 <br>
                 <button class ='createUserB' value="placeOrder" id="placeOrder" name="button" type="submit">Place Order</button>
+            </form>
+            <form id="exampleB">
                 <button class="createUserB" class='createB' style="margin-top: 10px;" value="exampleB" id="exampleB" name="button" type="submit">Example Order</button>
             </form>
         </div>
 
         <script>    
+
+            $(document).ready(function () {
+                $('#placeOrder').submit(function (e) {
+                    var user = {
+                        customerID:      $('input[name=userID]').val(),
+                        manufacturer: $('input[name=manufacturer]').val(),
+                        model: $('input[name=model]').val()
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createOrder',
+                        data: user,
+                        success: function (response) {
+                            alert('Checking Data...'); // Display response message
+                            window.location.href = '/';
+                        },
+                        error: function () {
+                            alert('Error placing user order.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            userID:      $('input[name=userID]').val('');
+                            manufacturer: $('input[name=manufacturer]').val('');
+                            model: $('input[name=model]').val('');
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+                $('#exampleB').submit(function (e) {
+                    var user = {
+                        button: 'example'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createOrder',
+                        data: user,
+                        success: function (response) {
+                            alert('Checking Data...'); // Display response message
+                            window.location.href = '/createOrder';
+                        },
+                        error: function () {
+                            alert('Error creating user ordre.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            userID:      $('input[name=userID]').val('');
+                            manufacturer: $('input[name=manufacturer]').val('');
+                            model: $('input[name=model]').val('');
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                });
+            });
+
             const button = document.getElementById('exampleB');
             const id = document.getElementById('userID');
             const man = document.getElementById('manufacturer');

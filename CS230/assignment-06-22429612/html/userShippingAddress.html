@@ -3,30 +3,62 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Update Shipping Address</title>
-        <link rel="stylesheet" href="/styles.css">
+        <title>Shipping Address</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
-        <div id="form">
-            <h1>UPDATE SHIPPING ADDRESS</h1>
-            <form action="/updateUser/shippingAddress" method="post">
-                <label for="userID">User ID: </label>
-                <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
+        <div id="createUser">
+            <h1>Shipping Address</h1>
+            <form id="createS">
                 <label for="address1">Address Line 1:</label>
-                <input type="text" id="address1" name ='address1'>
+                <input type="text" id="address1" name ='address1' required>
                 <label for="address2">Address Line 2:</label>
                 <input type="text" id="address2" name ='address2'>
-                <label for="town">City/Town:</label>
-                <input type="text" id="town" name ='town'>
-                <label for="city">County:</label>
-                <input type="text" id="city" name ='city'>
+                <label for="town">Town:</label>
+                <input type="text" id="town" name ='town' required>
+                <label for="city">City:</label>
+                <input type="text" id="city" name ='city' required>
                 <label for="eircode">Eircode:</label>
                 <input type="text" id="eircode" name ='eircode'>
-                <button class ='createUserB' name="button" value="updateAddress" type="submit">Update Address</button>
-            </form>
-            <form action="/updateUser/shippingAddress" method="post">
-                <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
+                <br>
+                <button class ='createUserB' value="createB" id="createB" name="button" type="submit">Submit</button>
             </form>
         </div>
     </body>
+    <script>
+        $(document).ready(function () {
+                $('#createS').submit(function (e) {
+                    var ship = {
+                        address1:   $('input[name=address1]').val(), 
+                        address2:   $('input[name=address2]').val(), 
+                        town:       $('input[name=town]').val(),  
+                        city:       $('input[name=city]').val(), 
+                        eircode:    $('input[name=eircode]').val(), 
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createUser/shippingAddress',
+                        data: ship,
+                        success: function (response) {
+                            alert('User Shipping Address created successfully.');
+                            window.location.href = '/'; // Display response message
+                        },
+                        error: function () {
+                            alert('Error creating user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            address1:   $('input[name=address1]').val(''); // Reset address1 field
+                            address2:   $('input[name=address2]').val(''); // Reset address2 field
+                            town:       $('input[name=town]').val('');     // Reset town field
+                            city:       $('input[name=city]').val('');     // Reset city field
+                            eircode:    $('input[name=eircode]').val(''); 
+            
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                });
+            }); 
+    </script>
 </html>

@@ -4,21 +4,106 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User Search</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body id="formBody">
         <div id="form">
             <h1>SEARCH USER</h1>
-            <form action="/searchUser" method="post">
+            <form id="searchU">
                 <label for="fname">First Name(s):</label>
                 <input type="text" id="fname" name ='fname' placeholder="Billy">
                 <label for="sname">Surname:</label>
                 <input type="text" id="sname" name ='sname' placeholder="Snacks">
                 <br>
-                <button class ='createUserB' value="searchB" id="searchB" name="button" type="submit">Search</button>
+                <button class ='createUserB' value="searchB" id="searchU" name="button" type="submit">Search</button>
+            </form>
+            <form id="exampleB">
                 <button class="createUserB" class='createB' style="margin-top: 10px;" value="exampleB" id="exampleB" name="button" type="submit">Example Search</button>
+            </form>
+            <form id="searchAllB">
                 <button class="createUserB" class='createB' style="margin-top: 10px;" value="searchAllB" id="searchAllB" name="button" type="submit">Search All</button>
             </form>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#searchU').submit(function (e) {
+                    var user = {
+                        fname:      $('input[name=fname]').val(),
+                        sname:      $('input[name=sname]').val(),
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/searchUser',
+                        data: user,
+                        success: function (response) {
+                            alert('User found successfully.'); // Display response message
+                            window.location.href = '/searchUser';
+                        },
+                        error: function () {
+                            alert('Error searching user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                            // show confirmation message from API
+                            //showUserModal(data);
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+                $('#exampleB').submit(function (e) {
+                    var user = {
+                        button: 'example'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/searchUser',
+                        data: user,
+                        success: function (response) {
+                            alert('User found successfully.'); // Display response message
+                            window.location.href = '/searchUser';
+                        },
+                        error: function () {
+                            alert('Error searching user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                });
+                 
+                $('#searchAllB').submit(function (e) {
+                    var user = {
+                        button: 'all'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/searchUser',
+                        data: user,
+                        success: function (response) {
+                            alert('User found successfully.'); // Display response message
+                            window.location.href = '/searchUser';
+                        },
+                        error: function () {
+                            alert('Error searching user.'); // Display error message
+                        }
+                    })
+                        .done(function (data) {
+                            // reset the form for next time!
+                            fname:      $('input[name=fname]').val('');
+                            sname:      $('input[name=sname]').val('');
+                        });
+                    e.preventDefault(); // when method is called, the default action of the event will not be triggered.
+                                        // meand that clicked submit button will not take the browser to a new URL.
+                }); 
+            });
+        </script>
     </body>
 </html>

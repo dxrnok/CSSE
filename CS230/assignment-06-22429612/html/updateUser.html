@@ -13,7 +13,7 @@
                 <button onclick="alertExample()" class="createMainB" id="updateD">UPDATE USER DATA</button>
             </form>
             <form id="updateO">
-                <button onclick="alertExample()" class="createMainB" id="updateS">UPDATE USER ORDER</button>
+                <button onclick="alertExample()" class="createMainB" id="updateO">UPDATE USER ORDER</button>
             </form>
             <form id="updateA">
                 <button onclick="alertExample()" class="createMainB" id="updateA">UPDATE USER ADDRESS</button>
@@ -51,7 +51,7 @@
                             window.location.href = "/updateUser/order"; // Display response message
                         },
                         error: function () {
-                            alert('Error updating user.'); // Display error message
+                            alert('Error updating order.'); // Display error message
                         }
                     });
                 });
@@ -75,7 +75,7 @@
 
                     // AJAX POST request to create user
                     $.ajax({
-                        //type: 'GET',
+                        type: 'GET',
                         url: '/updateUser/shippingAddress',
                         success: function (response) {
                             window.location.href = "/updateUser/shippingAddress"; // Display response message
