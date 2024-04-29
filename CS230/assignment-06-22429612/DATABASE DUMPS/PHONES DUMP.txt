@@ -1,0 +1,38 @@
+[
+  {
+    _id: ObjectId("662ee552cb9b326596bbec6f"),
+    manufacturer: 'iPhone',
+    model: 'XR',
+    price: '120'
+  },
+  {
+    _id: ObjectId("662ee552cb9b326596bbec70"),
+    manufacturer: 'iPhone',
+    model: '13',
+    price: '160'
+  },
+  {
+    _id: ObjectId("662ee552cb9b326596bbec71"),
+    manufacturer: 'iPhone',
+    model: '15',
+    price: '600'
+  },
+  {
+    _id: ObjectId("662ee552cb9b326596bbec72"),
+    manufacturer: 'iPhone',
+    model: '11',
+    price: '140'
+  },
+  {
+    _id: ObjectId("662ee552cb9b326596bbec73"),
+    manufacturer: 'iPhone',
+    model: '14',
+    price: '300'
+  },
+  {
+    _id: ObjectId("662ee552cb9b326596bbec74"),
+    manufacturer: 'iPhone',
+    model: '8',
+    price: '100'
+  }
+]
