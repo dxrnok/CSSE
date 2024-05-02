@@ -26,7 +26,7 @@ const client = new MongoClient(connect.database.url, {
       deprecationErrors: true,
     }
 });
-
+let newId = 1;
 const dbName = 'CS230-06-UPDATED';
 ///CODE TO CONNECT TO MONGODB (GIVEN IN ATLAS)
 async function connection() {
@@ -36,9 +36,15 @@ async function connection() {
         // Send a ping to confirm a successful connection
         console.log('Successfully Connected To MongoDB!');
         const db = client.db(dbName);
-        collectionMember = db.collection('Gym Member');
-        collectionClass = db.collection('Gym Class');
-        collectionMemberClass = db.collection('Member-Class Information');
+        collectionMember = db.collection('members');
+        collectionClass = db.collection('class');
+        collectionMemberClass = db.collection('member-class-info');
+        
+        var findLastID = await collectionMember.find({ID: newId}).toArray();
+        while(findLastID.length > 0){
+            newId++;
+            findLastID = await collectionMember.find({ID: newId}).toArray();
+        }
     } catch(error) {
         // Ensures that the client will close when you finish/error
         console.error(error);
@@ -51,19 +57,36 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
-//render usersCreate.ejs when GET request is made to /createUser
-app.get('/createUser', (req, res) => {
-    res.render('usersCreate');
+//render a page to select what you want to create in database
+app.get('/create', (req, res) => {
+    res.render('createPage');
+});
+
+//methods to render ejs files for (C) from CRUD /create/...
+app.get('/create/member', (req, res) => {
+    res.render('createMember');
+});
+
+app.get('/create/gymClass', (req, res) => {
+    res.render('createGymClass');
+});
+
+app.get('/create/classMember', (req, res) => {
+    res.render('addMemberToClass');
+});
+
+app.get('/create/classMemberRedirected', (req, res) => {
+    res.render('addMemberToClassOnRedirect');
 });
 
 app.get('/userOrder', (req, res) => {
     res.render('userOrder');
 });
+
 //render userShippingAddress.ejs when GET request is made to /updateUser/userShippingAddress
 app.get('/updateUser/order', (req, res) => {
     res.render('updateOrder');
 });
-
 
 //render searchUser.ejs when GET request is made to /searchUser
 app.get('/searchUser', (req, res) => {
@@ -73,11 +96,6 @@ app.get('/searchUser', (req, res) => {
 //render deleteUser.ejs when GET request is made to /deleteUser
 app.get('/deleteUser', (req, res) => {
     res.render('deleteUser');
-});
-
-//render shipping.ejs when GET request is made to /createUser/userShippingAddress
-app.get('/createUser/shippingAddress', (req, res) => {
-    res.render('shippingAddress');
 });
 
 //render updateUser.ejs when GET request is made to /updateUser
@@ -98,18 +116,12 @@ app.get('/updateUser/shippingAddress', (req, res) => {
     res.render('updateShippingAddress');
 });
 
-let userIds;    //storing userID from USER CREATION
-let newId = 1;
-//POST method for user creation
-app.post('/createUser', async (req, res) => {
+//POST method for member creation
+app.post('/create/member', async (req, res) => {
     try{
         if(req.body.button === 'createUser'){   //check button clicked value
                                                 //lines with req.body use the middleware stated at line 7,8
-            //store all User information data
-            var findLastID = await collectionMember.find({ID: newId}).toArray();
-            while(findLastID){
-                newId++;
-            }
+            const checkPremium = req.body.premium === 'true';
 
             const dataUser = {
                 ID: newId,
@@ -117,13 +129,11 @@ app.post('/createUser', async (req, res) => {
                 fname: req.body.fname,
                 sname: req.body.sname,
                 email: req.body.email,
-                premium: req.body.premium
+                premium: checkPremium
             };
 
             const userData = await collectionMember.insertOne(dataUser);  //insert data into collection
             console.log('Member Data Inserted Successfully:', userData.acknowledged);  //log that insertion went successfully
-            
-            let userID = userData.insertedId;   //store user _id that was just inserted (from mongoDB docs)
 
             //send a message and redirect to main page found similar example on stackoverflow to change page and alert
             //this format will be used multiple times through out the code so i provided message here
@@ -132,7 +142,7 @@ app.post('/createUser', async (req, res) => {
             const script = `
                 <script>
                     alert('User created successfully!');
-                    window.location.href = '/createUser/gymClass';
+                    window.location.href = '/create/classMemberRedirected';
                 </script>
             `;
             console.log('User created successfully!');
@@ -164,25 +174,18 @@ app.post('/createUser', async (req, res) => {
                 premium: genPrem
             }   
 
-            const insertedExample = await collectionMember.insertOne(memberData);   //insert data into collection
+            const insertedExample = await collectionMember.insertOne(memberData);  //insert data into collection
 
-            var genClass = 0;
-            genClass = Math.floor(Math.random() * 6)+1;
-            //insert shipping address and home address for users
-            const insert10Address = await collectionAddress.insertMany(usersAddress);
-            const insert10ShipAddress = await collectionShip.insertMany(usersAddress);
+            var genClassID = 0;
+            var insertedGymClass;
+            for(let i = 0; i < 3; i++){
+                genClassID = Math.floor(Math.random() * 6)+1;
+                insertedGymClass = await collectionMemberClass.insertOne({userID: newId, classID: genClassID});
+                console.log('Gym Class Inserted Successfully:', insertedGymClass.acknowledged);
+            }
             
             //log that everything went successfully
-            console.log('Users Inserted Successfully:', memberData.acknowledged );
-            console.log('Addresses Inserted Successfully:', insert10Address.acknowledged );
-            console.log('Shipping Addresses Inserted Successfully:', insert10ShipAddress.acknowledged );
-            console.log('User Orders Inserted Successfullt:', insert10Ordres.acknowledged );
-
-            //clear userids to prevent file from getting too large
-            //and this will make sure that new entrys are added for new users
-            if(userIds.length > 0){
-                userIds.length = 0
-            }
+            console.log('Member Inserted Successfully:', insertedExample.acknowledged);
             
             const script = `
             <script>
@@ -196,25 +199,56 @@ app.post('/createUser', async (req, res) => {
             res.status(200).send(script);
         }
     }catch(error){
-        console.error('Error Creating User: ', error);
-        res.status(500).send('Error Creating User');
+        console.error('Error Creating Member: ', error);
+        res.status(500).send('Error Creating Member');
     }
 });
 
 //POST method for user shipping address creation
-app.post('/createUser/userShippingAddress', async (req, res) => {
+app.post('/create/classMemberRedirected', async (req, res) => {
     try{
-        const dataAddress = {
-            customerID: userID,
-            address1: req.body.address1,
-            address2: req.body.address2,
-            town: req.body.town,
-            city: req.body.city,
-            eircode: req.body.eircode
+        const notFound = `
+            <script>
+                alert('Error: Finding ID. Check console!');
+                window.location.href = '/create/classMemberRedirected';
+            </script>
+        `;
+        const classData = {
+            userID: newId,
+            classID: req.body.classID
         } 
-        //insert data into collection and log that it went successfully
-        const shipData = await collectionShip.insertOne(dataAddress);
-        console.log('User Data Inserted Successfully:', shipData.acknowledged );
+
+        const classIDArray = classData.classID.split(',');
+        const classIDs = [];
+        //var findClass;
+        var classFound = false, notFoundID = 0;
+        for (let i = 0; i < classIDArray.length; i++) {
+            const classIDsToInt = parseInt(classIDArray[i].trim());
+
+            var findClass = await collectionClass.find({ID: classIDsToInt}).toArray()
+            if(findClass.length > 0){
+                classFound = true;
+            }else{
+                classFound = false;
+                notFoundID = classIDsToInt;
+                break;
+            }
+            var findMember = await collectionMember.find({ID: classData.userID}).toArray();
+            if(i === classIDArray.length-1){
+                if(findMember.length > 0){
+                    if(classFound){
+                        console.log("Gym Class with ID(s) ", classData.classID, " was found!");
+                        var findClassInfo = await collectionClass.find({ID: classData.classID}).toArray();
+                        
+                    }else{
+                        console.log("Gym Class with ID ", notFoundID, " was NOT found!");
+                    }
+                }else{
+                    console.log("Member with ID ", classData.userID, " was found!");
+                    
+                }
+            }
+        }
 
         const script = `
             <script>
