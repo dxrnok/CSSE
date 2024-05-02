@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Data</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div id="form">
+            <h1>UPDATE DATA</h1>
+            <form action="/updateUser/data" method="post">
+                <label for="userID">User ID: </label>
+                <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
+                <label for="title">Title:</label>
+                <select style="margin-top: 5px;" name="title" id="title">
+                    <option></option>
+                    <option value="mx">Mx</option>
+                    <option value="ms">Ms</option>
+                    <option value="mr">Mr</option>
+                    <option value="mrs">Mrs</option>
+                    <option value="miss">Miss</option>
+                    <option value="dr">Dr</option>
+                    <option value="other">Other (Specify)</option>
+                </select>
+                <label for="other"></label>
+                <input type="text" id="otherInput" name ='otherInput' placeholder="Prof">
+                <label for="fname">First Name(s):</label>
+                <input type="text" id="fname" name ='fname'>
+                <label for="sname">Surname:</label>
+                <input type="text" id="sname" name ='sname'>
+                <label for="mobileNO">Mobile Number:</label>
+                <input type="text" id="mobileNO" name ='mobile'>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name ='email'>
+                <button class ='createUserB' name="button" value="updateData" type="submit">Update User</button>
+            </form>
+            <form action="/updateUser/data" method="post">
+                <button class ='createUserB' style="margin-top: 10px;"name="button" value="updateExample" type="submit">Update Example</button>
+            </form>
+        </div>
+        
+        
+        <script>
+            //same approach as userCreate.ejs    
+            const title = document.querySelectorAll("#title");
+            const otherInput = document.getElementById("otherInput");
+            title.forEach((element) => {
+                element.addEventListener('change', () => {
+                    if (element.value === "other") {
+                        otherInput.style.visibility = "visible";
+                        otherInput.setAttribute('required', true);
+                    } else {
+                        otherInput.style.visibility = "hidden";
+                        otherInput.removeAttribute('required');
+                        otherInput.value = '';
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

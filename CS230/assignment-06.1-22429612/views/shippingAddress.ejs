@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shipping Address</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div id="createUser">
+            <h1>Shipping Address</h1>
+            <form action="/userShippingAddress" method="post">
+                <label for="address1">Address Line 1:</label>
+                <input type="text" id="address1" name ='address1' required>
+                <label for="address2">Address Line 2:</label>
+                <input type="text" id="address2" name ='address2'>
+                <label for="town">Town:</label>
+                <input type="text" id="town" name ='town' required>
+                <label for="city">City:</label>
+                <input type="text" id="city" name ='city' required>
+                <label for="eircode">Eircode:</label>
+                <input type="text" id="eircode" name ='eircode'>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
