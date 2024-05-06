@@ -138,7 +138,7 @@ app.post('/create/member', async (req, res) => {
             //send a message and redirect to main page found similar example on stackoverflow to change page and alert
             //this format will be used multiple times through out the code so i provided message here
             //they all have the same intention just changed to satisfy part of code
-            console.log("Redirecting to choose gym classes");
+            console.log('Redirecting to choose gym classes');
             const script = `
                 <script>
                     alert('User created successfully!');
@@ -162,7 +162,7 @@ app.post('/create/member', async (req, res) => {
             const randomSname = ['Downhill', 'Everest', 'Johnson', 'Townsend', 'Heffernan'];
             genSname = randomSname[Math.floor(Math.random() * randomSname.length)];
             const booleanArr = [true, false];
-            const newMail = genFname+"."+genSname+"@mail.example";
+            const newMail = genFname+'.'+genSname+'@mail.example';
             genPrem = booleanArr[Math.floor(Math.random() * booleanArr.length)];
 
             var memberData = {
@@ -189,17 +189,16 @@ app.post('/create/member', async (req, res) => {
             
             const script = `
             <script>
-                alert('User created successfully!');
+                alert('Check Console!');
                 window.location.href = '/';
             </script>
             `;
-            console.log('User created successfully!');
 
             //Successful status and exec script
             res.status(200).send(script);
         }
     }catch(error){
-        console.error('Error Creating Member: ', error);
+        console.error('Error Creating Member:', error);
         res.status(500).send('Error Creating Member');
     }
 });
@@ -207,24 +206,17 @@ app.post('/create/member', async (req, res) => {
 //POST method for user shipping address creation
 app.post('/create/classMemberRedirected', async (req, res) => {
     try{
-        const notFound = `
-            <script>
-                alert('Error: Finding ID. Check console!');
-                window.location.href = '/create/classMemberRedirected';
-            </script>
-        `;
         const classData = {
             userID: newId,
             classID: req.body.classID
         } 
 
-        const classIDArray = classData.classID.split(',');
-        const classIDs = [];
-        //var findClass;
+        var classIDArray = classData.classID.split(',');
+        var classArray = []
         var classFound = false, notFoundID = 0;
         for (let i = 0; i < classIDArray.length; i++) {
-            const classIDsToInt = parseInt(classIDArray[i].trim());
-
+            var classIDsToInt = parseInt(classIDArray[i].trim());
+            classArray.push(classIDsToInt);
             var findClass = await collectionClass.find({ID: classIDsToInt}).toArray()
             if(findClass.length > 0){
                 classFound = true;
@@ -233,30 +225,47 @@ app.post('/create/classMemberRedirected', async (req, res) => {
                 notFoundID = classIDsToInt;
                 break;
             }
-            var findMember = await collectionMember.find({ID: classData.userID}).toArray();
-            if(i === classIDArray.length-1){
-                if(findMember.length > 0){
-                    if(classFound){
-                        console.log("Gym Class with ID(s) ", classData.classID, " was found!");
-                        var findClassInfo = await collectionClass.find({ID: classData.classID}).toArray();
-                        
-                    }else{
-                        console.log("Gym Class with ID ", notFoundID, " was NOT found!");
-                    }
-                }else{
-                    console.log("Member with ID ", classData.userID, " was found!");
-                    
-                }
-            }
         }
-
+        var findMember = await collectionMember.find({ID: classData.userID}).toArray();
+        if(findMember.length > 0){
+            console.log('Member with ID', classData.userID, 'was found!');
+            if(classFound){
+                console.log('Gym Class with ID(s)', classData.classID, 'was found!');
+                for(let i = 0; i < classArray.length; i++){
+                    var createGymClasses = await collectionMemberClass.insertOne({userID: newId, classID: classArray[i]});
+                    var findClass = await collectionClass.findOne({ID: classArray[i]});
+                    findClass.members++;
+                    await collectionClass.updateOne({ID: classArray[i]}, {$set: {members: findClass.members}})
+                    console.log('Member Class with ID', classArray[i], 'Inserted Successfully', createGymClasses.acknowledged);
+                }
+            }else{
+                console.log('Gym Class with ID ', notFoundID, ' was NOT found!');
+                const notFound = `
+                    <script>
+                        alert('GYM CLASS ID NOT FOUND!');
+                        window.location.href = '/create/classMember';
+                    </script>
+                `;
+                res.status(500).send(notFound);
+                return
+            }
+        }else{
+            const notFound = `
+                    <script>
+                        alert('MEMBER ID NOT FOUND!');
+                        window.location.href = '/create/classMember';
+                    </script>
+                `;
+            console.log('Member with ID', classData.userID, 'was NOT found!');
+            res.status(500).send(notFound);
+            return
+        }
         const script = `
             <script>
                 alert('User created successfully!');
                 window.location.href = '/';
             </script>
         `;
-        console.log('User created successfully!');
 
         //Successful status and exec script
         res.status(200).send(script);
@@ -266,6 +275,165 @@ app.post('/create/classMemberRedirected', async (req, res) => {
     }
 });
 
+app.post('/create/gymClass', async (req, res) => {
+    try{
+        if(req.body.button === 'createUser'){   //check button clicked value
+                                                //lines with req.body use the middleware stated at line 7,8
+            const checkPremium = req.body.premium === 'true';
+
+            const dataUser = {
+                ID: newId,
+                title: req.body.title === 'other' ? req.body.otherInput : req.body.title,
+                fname: req.body.fname,
+                sname: req.body.sname,
+                email: req.body.email,
+                premium: checkPremium
+            };
+
+            const userData = await collectionMember.insertOne(dataUser);  //insert data into collection
+            console.log('Member Data Inserted Successfully:', userData.acknowledged);  //log that insertion went successfully
+
+            //send a message and redirect to main page found similar example on stackoverflow to change page and alert
+            //this format will be used multiple times through out the code so i provided message here
+            //they all have the same intention just changed to satisfy part of code
+            console.log('Redirecting to choose gym classes');
+            const script = `
+                <script>
+                    alert('User created successfully!');
+                    window.location.href = '/create/classMemberRedirected';
+                </script>
+            `;
+            console.log('User created successfully!');
+
+            //Successful status and exec script
+            res.status(200).send(script);
+        }else{
+            var findLastID = await collectionMember.find({ID: newId}).toArray();
+            while(findLastID){
+                newId++;
+            }
+            var genTitle = '', genFname = '', genSname = '', genPrem = false;
+            const randomTitle = ['Mr', 'Mx', 'Mrs', 'Prof', 'Dr'];
+            genTitle = randomTitle[Math.floor(Math.random() * randomTitle.length)];
+            const randomFname = ['Exe', 'Boby', 'Freddy', 'Richie', 'Adam'];
+            genFname = randomFname[Math.floor(Math.random() * randomFname.length)];
+            const randomSname = ['Downhill', 'Everest', 'Johnson', 'Townsend', 'Heffernan'];
+            genSname = randomSname[Math.floor(Math.random() * randomSname.length)];
+            const booleanArr = [true, false];
+            const newMail = genFname+'.'+genSname+'@mail.example';
+            genPrem = booleanArr[Math.floor(Math.random() * booleanArr.length)];
+
+            var memberData = {
+                ID: newId,
+                title: genTitle,
+                fname: genFname,
+                sname: genSname,
+                email: newMail,
+                premium: genPrem
+            }   
+
+            const insertedExample = await collectionMember.insertOne(memberData);  //insert data into collection
+
+            var genClassID = 0;
+            var insertedGymClass;
+            for(let i = 0; i < 3; i++){
+                genClassID = Math.floor(Math.random() * 6)+1;
+                insertedGymClass = await collectionMemberClass.insertOne({userID: newId, classID: genClassID});
+                console.log('Gym Class Inserted Successfully:', insertedGymClass.acknowledged);
+            }
+            
+            //log that everything went successfully
+            console.log('Member Inserted Successfully:', insertedExample.acknowledged);
+            
+            const script = `
+            <script>
+                alert('Check Console!');
+                window.location.href = '/';
+            </script>
+            `;
+
+            //Successful status and exec script
+            res.status(200).send(script);
+        }
+    }catch(error){
+        console.error('Error Creating Member:', error);
+        res.status(500).send('Error Creating Member');
+    }
+});
+
+
+app.post('/create/classMember', async (req, res) => {
+    try{
+        const classData = {
+            userID: parseInt(req.body.userID),
+            classID: req.body.classID
+        } 
+
+        var classIDArray = classData.classID.split(',');
+        var classArray = []
+        var classFound = false, notFoundID = 0;
+        for (let i = 0; i < classIDArray.length; i++) {
+            var classIDsToInt = parseInt(classIDArray[i].trim());
+            classArray.push(classIDsToInt);
+            var findClass = await collectionClass.find({ID: classIDsToInt}).toArray()
+            if(findClass.length > 0){
+                classFound = true;
+            }else{
+                classFound = false;
+                notFoundID = classIDsToInt;
+                break;
+            }
+        }
+
+        var findMember = await collectionMember.find({ID: classData.userID}).toArray();
+        if(findMember.length > 0){
+            console.log('Member with ID', classData.userID, 'was found!');
+            if(classFound){
+                console.log('Gym Class with ID(s)', classData.classID, 'was found!');
+                for(let i = 0; i < classArray.length; i++){
+                    var createGymClasses = await collectionMemberClass.insertOne({userID: classData.userID, classID: classArray[i]});
+                    var findClass = await collectionClass.findOne({ID: classArray[i]});
+                    findClass.members++;
+                    await collectionClass.updateOne({ID: classArray[i]}, {$set: {members: findClass.members}})
+                    console.log('Member Class with ID', classArray[i], 'Inserted Successfully', createGymClasses.acknowledged);
+                }
+            }else{
+                console.log('Gym Class with ID', notFoundID, 'was NOT found!');
+                const notFound = `
+                    <script>
+                        alert('GYM CLASS ID NOT FOUND!');
+                        window.location.href = '/create/classMember';
+                    </script>
+                `;
+                res.status(500).send(notFound);
+                return
+            }
+        }else{
+            const notFound = `
+                    <script>
+                        alert('MEMBER ID NOT FOUND!');
+                        window.location.href = '/create/classMember';
+                    </script>
+                `;
+            console.log('Member with ID', classData.userID, 'was NOT found!');
+            res.status(500).send(notFound);
+            return
+        }
+        const script = `
+            <script>
+                alert('Check Console!');
+                window.location.href = '/';
+            </script>
+        `;
+        console.log('User created successfully!');
+
+        //Successful status and exec script
+        res.status(200).send(script);
+    }catch(error){
+        console.error('Error Creating User:', error);
+        res.status(500).send('Error Creating User');
+    }
+});
 
 //POST method for searching users
 app.post('/searchUser', async (req, res) => {
@@ -430,7 +598,7 @@ app.post('/userOrder', async (req, res) => {
                 
                 console.log('Placed Order For User: ', userOrder.acknowledged);
             }else{
-                console.log("There Are No Users In Database");
+                console.log('There Are No Users In Database');
                 script = `
                     <script>
                         alert('No Users Found In Database!');
@@ -494,7 +662,7 @@ app.post('/deleteUser', async (req, res) => {
                 console.log('Users Shippng Address Deleted With ID: ', objToString, ' Deleted Amount: ', deleteUserS.deletedCount );
                 console.log('Users Orders With ID: ', objToString, ' Deleted Amount: ', deleteUserO.deletedCount );
             }else{
-                console.log("There Are No Users In Database");
+                console.log('There Are No Users In Database');
                 script = `
                     <script>
                         alert('No Users Found In Database!');
