@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Delete Member</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>DELETE MEMBER</h1>
+            <form action="/delete/member" method="post">
+                <label for="userID">User ID:</label>
+                <input type="number" id="userID" name ='userID' min="1">
+                <br>
+                <button class ='createUserB' value="deleteM" id="deleteM" name="button" type="submit">Delete Member</button>
+            </form>
+        </div>
+    </body>
+</html>

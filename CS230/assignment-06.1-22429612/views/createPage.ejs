@@ -3,25 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Management Application</title>
+        <title>Create Page</title>
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
         <div id="form" style="text-align: center;">
             <form action="/create/member" method="get">
-                <button onclick="alertExample()" class="createMainB" id="createMember">CREATE MEMBER</button>
+                <button class="createMainB" id="createMember">CREATE MEMBER</button>
             </form>
             <form action="/create/gymClass" method="get">
-                <button onclick="alertExample()" class="createMainB" id="gymClass">CREATE GYM CLASS</button>
-            </form>
-            <form action="/create/classMember" method="get">
-                <button onclick="alertExample()" class="createMainB" id="memberClassInfo">ADD MEMBER TO GYM CLASS</button>
+                <button class="createMainB" id="gymClass">CREATE GYM CLASS</button>
             </form>
         </div>
-        <script>    
-            function alertExample(){
-                alert('*NOTE* ANY EXAMPLE BUTTON DOESNT REQUIRE INPUT');
-            }
-        </script>
     </body>
 </html>

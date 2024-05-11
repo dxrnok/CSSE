@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contract Creation</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div id="form">
+            <h1>CREATE CONTRACT</h1>
+            <form action="/create/contract" method="post">
+                <label for="contractDate">Date:</label>
+                <input type="date" id="contractDate" name ='contractDate' min="2024-05-11" placeholder='11/05/2024' required>                
+                <label for="property">Property Address:</label>
+                <input type="text" id="property" name ='property' required>
+                <label for="landlord">Landlord:</label>
+                <input type="text" id="landlord" name ='landlord' required>
+                <label for="fee">Fee (Monthly) (€):</label>
+                <input type="number" id="fee" name ='fee' min="1"required>
+                <label for="doorNum">Door Number:</label>
+                <input type="number" id="doorNum" name ='doorNum' required>
+                <label for="contractLength">Contract Length:</label>
+                <select name="contractLength" id="contractLength" required>
+                    <option></option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option>
+                    <option value="permanent">Permanent</option>
+                </select>
+                <br>
+                <label for="propertyType">Property Type:</label>
+                <select name="propertyType" id="propertyType" required>
+                    <option></option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Semi-Detached">Semi-Detached</option>
+                    <option value="Detached">Detached</option>
+                    <option value="other">Other (Specify)</option>
+                </select>
+                <label for="other"></label>
+                <input type="text" id="otherInput" name ='otherInput' placeholder="Prof" required>
+                <br>
+                <button class ='otherButton' name="button" value="create" type="submit">Create Contract</button>
+            </form>
+            <form action="/create/contract" method="post">
+                <button class ='otherButton'style="margin-top: 10px;"name="button" value="random" type="submit">Create Random Contract</button>
+            </form>
+        </div>
+        <script>    
+            const propertyType = document.querySelectorAll("#propertyType");
+            const otherInput = document.getElementById("otherInput");
+
+            //Making sure to make input field visible and required when title === 'other'
+            propertyType.forEach(element => {
+                element.addEventListener('change', () => {
+                    if (element.value === "other") {
+                        otherInput.style.visibility = "visible";
+                        otherInput.setAttribute('required', true);
+                    } else {
+                        otherInput.style.visibility = "hidden";
+                        otherInput.removeAttribute('required');
+                        otherInput.value = '';
+                    }
+                });
+            });
+
+            //validate that date is not < todays date
+            //automatically updates because contracts cannot be set for a date that
+            //has passed
+            function upToDate() {
+                var current = new Date();
+
+                var dd = current.getDate();
+                var mm = current.getMonth()+1; //+1 because first month january is 0
+                var yyyy = current.getFullYear();
+                if(dd < 10){
+                    dd = "0" + dd;
+                }
+                if(mm < 10){
+                    mm = "0" + mm;
+                }
+
+                //set min attribute to todays date
+                document.getElementById("contractDate").setAttribute("min", yyyy + '-' + mm + '-' + dd);
+            }
+            upToDate();
+        </script>
+    </body>
+</html>

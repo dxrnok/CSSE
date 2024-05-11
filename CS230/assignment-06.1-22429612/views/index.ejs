@@ -9,30 +9,17 @@
     <body>
         <div id="form" style="text-align: center;">
             <form action="/create" method="get">
-                <button onclick="alertCreate()" class="createMainB" id="createU">CREATE USER</button>
+                <button class="createMainB" id="createU">CREATE USER</button>
             </form>
-            <form action="/updateUser" method="get">
-                <button onclick="alertExample()" class="createMainB" id="createU">UPDATE USER</button>
+            <form action="/update" method="get">
+                <button class="createMainB" id="createU">UPDATE USER</button>
             </form>
-            <form action="/deleteUser" method="get">
-                <button onclick="alertExample()" class="createMainB" id="createD">DELETE USER</button>
+            <form action="/delete" method="get">
+                <button class="createMainB" id="createD">DELETE USER</button>
             </form>
-            <form action="/searchUser" method="get">
-                <button onclick="alertExample()" class="createMainB" id="createS">SEARCH USER</button>
-            </form>
-            <form action="/userOrder" method="get">
-                <button onclick="alertExample()" class="createMainB" id="createO">PLACE ORDER</button>
+            <form action="/search" method="get">
+                <button class="createMainB" id="createS">SEARCH USER</button>
             </form>
         </div>
-        <script>    
-
-            //alert function to allow grader know that no inputs needed for example button
-            function alertExample(){
-                alert('*NOTE* ANY EXAMPLE BUTTON DOESNT REQUIRE INPUT(These are CRUD examples)');
-            }
-            function alertCreate(){
-                alert('*NOTE* "Create 10 Random Users" DOESNT REQUIRE INPUT');
-            }
-        </script>
     </body>
 </html>
