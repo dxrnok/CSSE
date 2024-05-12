@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tenant Search</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>SEARCH TENANT</h1>
+            <form action="/search/tenant" method="post">
+                <label for="fname">First Name(s):</label>
+                <input type="text" id="fname" name ='fname' placeholder="Billy">
+                <label for="sname">Surname:</label>
+                <input type="text" id="sname" name ='sname' placeholder="Snacks">
+                <br>
+                <button class ='otherButton' value="searchB" id="searchB" name="button" type="submit">Search</button>
+                <button class="otherButton" style="margin-top: 10px;" value="randomB" id="randomB" name="button" type="submit">Random Search</button>
+                <button class="otherButton" style="margin-top: 10px;" value="searchAllB" id="searchAllB" name="button" type="submit">Search All Tenants</button>
+                <button class="otherButton" style="margin-top: 10px;" value="searchAllAB" id="searchAllAB" name="button" type="submit">Search All Address's</button>
+            </form>
+        </div>
+    </body>
+</html>
