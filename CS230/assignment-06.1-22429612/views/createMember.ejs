@@ -3,12 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Creation</title>
+        <title>Member Creation</title>
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
         <div id="form">
-            <h1>CREATE USER</h1>
+            <h1>CREATE MEMBER</h1>
             <form action="/create/member" method="post">
                 <label for="title">Title:</label>
                 <select name="title" id="title" required>
@@ -33,10 +33,10 @@
                 <label for="premium">Premium Membership:</label>
                 <input type="checkbox" id="premium" name="premium" value="true">
                 <br>
-                <button class ='createUserB' onclick="emailConvert()" name="button" value="createUser" type="submit">Create User</button>
+                <button class ='createUserB' onclick="emailConvert()" name="button" value="createUser" type="submit">Create Member</button>
             </form>
             <form action="/create/member" method="post">
-                <button class ='createUserB'style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create Random User</button>
+                <button class ='createUserB'style="margin-top: 10px;"name="button" value="createUsers" type="submit">Create Random Member</button>
             </form>
         </div>  
 

@@ -1,0 +1,119 @@
+
+body, html {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; 
+}
+
+#form {
+	height: 100%;
+    width: 80%; 
+    padding: 30px;
+    background-color: #fff; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+
+h1{
+	text-transform: uppercase;
+	font-family: arial black;
+	text-align: center;
+}
+
+label{
+	font-family: arial;
+	margin: 3px 0px 3px 0px;
+}
+
+input {
+	display: flex;
+	margin: 3px 0px 3px 0px;
+	font-family: arial;
+	background-color: rgb(119, 207, 236);
+	border-color: rgb(123, 175, 192);
+	border-radius: 5px;
+	color: #000;
+	cursor: pointer;
+	width: 100%;
+}
+
+select {
+	background-color: rgb(119, 207, 236);
+	border-color: rgb(123, 175, 192);
+	border-radius: 5px;
+	color: #000;
+	cursor: pointer;
+	width: 50%;
+	margin: 3px 0px 3px 0px;
+}
+
+select:hover{
+	cursor: pointer;
+	transition: all 0.2s linear;
+    transform: translate3d(0, -3px, 0);
+	background: rgb(51, 145, 177);
+}
+
+#otherInput{
+	margin-bottom: 3px;
+	visibility: hidden;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+ 	border-radius: 2px;
+}
+
+input[type="checkbox"]:hover{
+  transform: scale(1.7);
+}
+
+  
+input:required, select:required{
+  border: 2px solid green;
+}
+input:required:invalid, select:required:invalid {
+  border: 2px solid red;
+}
+
+.otherButton{
+	border-radius: 5px;
+	margin-top: 3px;
+	text-align: center;
+	width: 100%;
+    font-family: sans-serif;
+	height: 30px;
+	padding: 0 10px;
+	font-weight: bold;
+    background: rgb(119, 207, 236);
+	border-color: rgb(123, 175, 192);
+	transition: all 0.2s linear;
+    transform: translate3d(0, 3px, 0);
+}
+
+.mainButton{
+	border-radius: 5px;
+	margin: auto;
+    display: inline-block;
+    font-family: sans-serif;
+	width: 90%;
+	margin-top: 7px;
+	height: 50px;
+	padding: 0 10px;
+	font-weight: bold;
+    background: rgb(119, 207, 236);
+	border-color: rgb(123, 175, 192);
+	transition: all 0.2s linear;
+    transform: translate3d(0, 3px, 0);
+}
+
+.mainButton:hover, .otherButton:hover{
+    cursor: pointer;
+	transition: all 0.2s linear;
+    transform: translate3d(0, -3px, 0);
+	border-color: rgb(91, 127, 139);
+	background: rgb(51, 145, 177);
+}
