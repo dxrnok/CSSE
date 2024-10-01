@@ -17,6 +17,7 @@ int reverseNum(int num){
     return reversed;
 }
 
+//This algorithm iterates through all possible numbers 
 int GCD(int num1, int num2){
     int gcd = 1;
 
@@ -45,16 +46,33 @@ bool isPal(int num){
     return check;
 }
 
-int powFunc(int num1, int num2){
-    int res = num1;
-    for(int i = 1; i < num2; i++){
-        res *= num1;
+int powFunc(int base, int power){
+    int res = 1;
+    if(base == 0 || base == 1 || base == -1){
+        return base;
+    }
+    
+    while(power != 0){
+        res *= base;
+        power--;
     }
     return res;
 }
 
+bool powOf2(int num){
+    if(num <= 0){
+        return false;
+    }
+
+    while(num%2==0){
+        num /= 2;
+    }
+    return num == 1;
+}
+
 int main(){
-    int x = -121;
+    string w = "\033[0;31m", c = "\033[0;32m", r = "\033[0m";
+    int x = 73237;
     //cout << " Your Number Is: " << v;
     printf("Your Number is: %d\n", x);
     //cout << " Reversed Number: " << reverseNum(x);
@@ -62,12 +80,13 @@ int main(){
 
     int y = 24, z = 36;
     // cout << " GCD: " << GCD(y, z);
-    printf("GCD of %d and %d", y, z);
-    printf(" is %d\n", GCD(y,z));
+    printf("GCD: %d and %d = %d\n", y, z, GCD(y,z));
     // cout << " pal " << isPal(121);
-    printf("Palindrome: %s\n", isPal(x) ? "true" : "false");
+    printf("Palindrome: %d = %s\n", x, isPal(x) ? "\033[0;32mtrue\033[0m" : "\033[0;31mfalse\033[0m");
 
-    int k = 2, h = 3;
-    printf("Power Function of %d^%d", k, h);
-    printf(" = %d\n", powFunc(k,h));
+    int base = 1, power = 3;
+    printf("Power Function: %d^%d = %d\n", base, power, powFunc(base,power));
+
+    int powOf2Num = 128;
+    printf("Power Of Two: %d = %s\n", powOf2Num, powOf2(powOf2Num) ? "\033[0;32mtrue\033[0m" : "\033[0;31mfalse\033[0m");
 }
