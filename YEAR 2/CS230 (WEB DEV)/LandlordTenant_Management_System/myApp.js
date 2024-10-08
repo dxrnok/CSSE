@@ -4,7 +4,6 @@
 
 //*ADDITIONAL NOTES*
 //for any buttons containing "Random" no inputs are needed
-//
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
