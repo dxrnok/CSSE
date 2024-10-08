@@ -79,13 +79,13 @@ int powFunc(int base, int power){
     
     //check to make sure power is not 0 to insure the loop is not infinit
     while(power!=0){
-        //if the power is odd because 
+        //if the power is odd 
         if(power%2!=0){
             //multiple the result by the base
             res *= base;
         }
         
-        power /= 2; //divide the power by 2
+        power /= 2; //divide the power by 2 
         base *= base; //square the base
     }
     return res;
@@ -109,7 +109,7 @@ bool powOf2(int num){
 
 int main(){
     //TASK 1
-    /* int x;
+    int x;
     cout << "Type a number: "; 
     cin >> x; //Get user input
     printf("\nYour Number is: %d\n", x);
@@ -125,7 +125,7 @@ int main(){
     printf("GCD: %d and %d = %d\n", y, z, GCD(y,z));
 
     //TASK 3 (INPUT IS FROM TASK 1)
-    printf("Palindrome: %d = %s\n", x, isPalindrome(x) ? "\033[0;32mtrue\033[0m" : "\033[0;31mfalse\033[0m"); */
+    printf("Palindrome: %d = %s\n", x, isPalindrome(x) ? "\033[0;32mtrue\033[0m" : "\033[0;31mfalse\033[0m");
 
     //TASK 4
     int base = 4, power = 9;
