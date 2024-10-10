@@ -4,7 +4,7 @@ public class traitorsGameShow {
     public static final int NUM_PLAYERS = 22;
 
     public static void main(String[] args) {
-        int nTraitors = 5, nSims = 1000000;
+        int nTraitors = 3, nSims = 1000000;
         double traitorsWinCount = 0;
 
         for (int i = 0; i < nSims; i++) {

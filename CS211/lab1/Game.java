@@ -6,7 +6,7 @@ public class Game {
     private int playersLeft;
 
     public static void main(String[] args) {
-        Game x = new Game(1000000,22,5);
+        Game x = new Game(1000000,22,3);
     }
     public Game(int numSims, int amountOfPlayers, int amountOfTraitors){
         for(int i = 0; i<numSims; i++) {

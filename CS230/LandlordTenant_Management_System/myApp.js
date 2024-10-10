@@ -1,6 +1,6 @@
 //OPERATING SYSTEM: WINDOWS 10 PRO
 //BROWSER: GOOGLE CHROME 
-//Version 124.0.6367.158 (Official Build) (64-bit)
+//Version 124.0.6367.158 (Official Build) (64-bit)//
 
 //*ADDITIONAL NOTES*
 //for any buttons containing "Random" no inputs are needed
@@ -49,3 +49,12 @@ app.listen(8000, () => {
 //I had a major difficulty trying to find code errors in my past assignmnets, the routes way allowed me to 
 //develope a more clean and organised code. I added as much comments even to most basic parts just to make sure 
 //anyone can understand the code
+
+//80% research was done on https://www.w3schools.com/js/
+//other referrences: *NOTE THESE WERE ONLY USED TO GRASP BETTER SOLUTIONS TO CODE*
+//SUCH AS EXPORTING SCHEMAS
+//https://mongoosejs.com/docs/queries.html
+//https://fakerjs.dev/api/faker.html
+//https://fakerjs.dev/guide/usage
+//https://mongoosejs.com/docs/shared-schemas.html
+//https://mongoosejs.com/docs/schematypes.html

@@ -11,7 +11,7 @@ public class lab3{
         char[] arr = temp.toCharArray();
         
         System.out.println("Merged Word: " + wordMerge(w1, w2));
-        System.out.println("Merged Word: " + AlphaMergeSort(arr));
+        //System.out.println("Merged Word: " + AlphaMergeSort(arr));
         //System.out.println("Merged Word: " + AMergeSort(arr));
     }
 
@@ -37,6 +37,8 @@ public class lab3{
                 r = r+longWord.charAt(i);
             }
         }
+        char[] arr = r.toCharArray();
+        AlphaMergeSort(arr);
         return r;
     }
 
