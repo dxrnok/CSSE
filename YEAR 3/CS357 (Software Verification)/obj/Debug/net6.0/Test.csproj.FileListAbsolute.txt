@@ -1,0 +1,15 @@
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.csproj.AssemblyReference.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.AssemblyInfoInputs.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.AssemblyInfo.cs
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.csproj.CoreCompileInputs.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\Test.exe
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\refint\Test.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.pdb
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\Test.deps.json
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\Test.genruntimeconfig.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\Test.runtimeconfig.json
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\Test.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\ref\Test.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\Test.pdb

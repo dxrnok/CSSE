@@ -67,7 +67,6 @@ app.get('/updateUser/order', (req, res) => {
     res.render('updateOrder');
 });
 
-
 //render searchUser.ejs when GET request is made to /searchUser
 app.get('/searchUser', (req, res) => {
     res.render('searchUser');
