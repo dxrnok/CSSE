@@ -7,7 +7,7 @@ mongoose.connect(connect.database.url,{}).then(() => {
 }).catch(error => {
     // Ensures that the client will close when you finish/error
     console.error(error);
-    client.close();
+    //client.close();
 });
 
 //SCHEMAS
