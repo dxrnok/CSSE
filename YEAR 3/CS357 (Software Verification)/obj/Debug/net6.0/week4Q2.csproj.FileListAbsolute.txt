@@ -1,0 +1,12 @@
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.csproj.AssemblyReference.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.AssemblyInfoInputs.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.AssemblyInfo.cs
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.csproj.CoreCompileInputs.cache
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\refint\week4Q2.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\week4Q2.pdb
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week4Q2.deps.json
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week4Q2.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\obj\Debug\net6.0\ref\week4Q2.dll
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week4Q2.pdb
