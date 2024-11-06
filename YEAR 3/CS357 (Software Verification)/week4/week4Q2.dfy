@@ -7,6 +7,7 @@ method Min(a: int, b: int) returns (m: int)
         m:= a;
     }else{
         m:= b;
+        
     }
 }
 
