@@ -9,7 +9,7 @@ using System;
 using System.Numerics;
 using System.Collections;
 [assembly: DafnyAssembly.DafnySourceAttribute(@"// dafny 4.9.0.0
-// Command-line arguments: run --no-verify c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.dfy
+// Command-line arguments: build --output bin\q3 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.dfy
 // q3.dfy
 
 method Smallest(a: array<int>) returns (minIndex: nat)

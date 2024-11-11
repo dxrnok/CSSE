@@ -954,11 +954,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\week6\\q3\\q3.csproj",
+      "projectUniqueName": "C:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\bin\\q3.csproj",
       "projectName": "q3",
-      "projectPath": "c:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\week6\\q3\\q3.csproj",
+      "projectPath": "C:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\bin\\q3.csproj",
       "packagesPath": "C:\\Users\\konra\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\week6\\q3\\obj\\",
+      "outputPath": "C:\\Users\\konra\\OneDrive - Maynooth University\\Desktop\\github\\CSSE\\YEAR 3\\CS357 (Software Verification)\\bin\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\konra\\AppData\\Roaming\\NuGet\\NuGet.Config"

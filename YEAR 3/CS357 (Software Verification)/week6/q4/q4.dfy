@@ -1,13 +1,22 @@
 method Filter<T>(a: array<T>, P: T -> bool) returns (s: seq<T>)
-    ensures forall x :: x in s ==> P(x)   // All elements of the output sequence satisfy P
-    ensures (|s| == 0) ==> (forall x :: x in a ==> not P(x))  // If s is empty, no element in a satisfies P
-    ensures multiset(s) <= multiset(a[..])  // The output sequence only contains elements from a
+    ensures forall x :: x in s ==> P(x)
+    ensures (s == []) ==> forall x :: x in a[..] ==> !P(x)
+    ensures forall x :: x in s ==> x in a[..]
 {
-    var result := [];
-    // Iterate through the array a
-    for i := 0 to a.Length - 1
+    s := [];
+    var i := 0;
+    while i < a.Length
+        decreases a.Length - i
+        invariant 0 <= i <= a.Length
+        invariant forall k :: 0 <= k < i ==> (P(a[k]) ==> a[k] in s)
+        invariant forall x :: x in s ==> P(x)
+        invariant forall x :: x in s ==> x in a[..i]
+        invariant (s == []) <==> forall x :: x in a[..i] ==> !P(x)
+        
+    {
         if P(a[i]) {
-            result := result + [a[i]];  // Add the element to the result sequence if it satisfies P
+            s := s + [a[i]];
         }
-    s := result;  // Return the final result sequence
+        i := i + 1;
+    }
 }

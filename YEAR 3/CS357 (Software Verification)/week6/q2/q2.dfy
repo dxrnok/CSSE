@@ -25,6 +25,22 @@ method FibIter(n: nat) returns (x: nat)
     x:= z;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 method {:test} TEST()
 {
     var x := FibIter(5);
