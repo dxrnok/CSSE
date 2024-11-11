@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tenant Deletion</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>DELETE TENANT</h1>
+            <form action="/delete/landlord" method="post">
+                <label for="userID">ID:</label>
+                <input type="text" id="userID" name ='userID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)">
+                <br>
+                <button class ='otherButton' value="deleteB" id="deleteB" name="button" type="submit">Delete Tenant</button>
+                <button class="otherButton" style="margin-top: 10px;" value="randomB" id="randomB" name="button" type="submit">Delete Random Tenant</button>
+                <button class="otherButton" style="margin-top: 10px;" value="deleteAllB" id="searchAllB" name="button" type="submit">Delete All Tenants</button>
+            </form>
+        </div>
+    </body>
+</html>

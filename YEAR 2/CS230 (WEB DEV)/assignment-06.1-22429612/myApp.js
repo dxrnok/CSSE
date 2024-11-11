@@ -146,7 +146,7 @@ app.post('/create/member', async (req, res) => {
             const script = `
                 <script>
                     alert('Please Choose Classes for Member!');
-                    window.location.href = '/create/memberClassInfo';
+                    window.location.href = '/create/member';
                 </script>
             `;
             console.log('User and Gym Classes Created Successfully!');

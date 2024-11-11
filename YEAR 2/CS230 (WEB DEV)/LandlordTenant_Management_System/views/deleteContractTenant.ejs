@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tenant Deletion</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>DELETE TENANT</h1>
+            <form action="/delete/contract/tenant" method="post">
+                <label for="contractID">ID:</label>
+                <input type="text" id="contractID" name ='contractID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)" required>
+                <label for="fname">First Name(s):</label>
+                <input type="text" id="fname" name ='fname' pattern="[a-zA-z]+" minlength="3" required>
+                <label for="sname">Surname:</label>
+                <input type="text" id="sname" name ='sname' pattern="[a-zA-z]+" minlength="3" required>
+                <br>
+                <button class ='otherButton' value="deleteB" id="deleteB" name="button" type="submit">Delete Tenant</button>
+            </form>
+        </div>
+    </body>
+</html>

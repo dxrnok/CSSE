@@ -5,7 +5,7 @@ public class traitorsShow {
     public static final int NUM_SIMS = 1000000;
 
     public static void main(String[] args) {
-        int nTraitors = 5;
+        int nTraitors = 3;
         double tWinCount = 0;
 
         for (int i = 0; i < NUM_SIMS; i++) {

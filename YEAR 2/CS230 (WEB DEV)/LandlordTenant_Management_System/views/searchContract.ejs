@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html id="formHTML">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contract Search</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body id="formBody">
+        <div id="form">
+            <h1>SEARCH CONTRACT</h1>
+            <form action="/search/contract" method="post">
+                <label for="contractID">ID:</label>
+                <input type="text" id="contractID" name ='contractID' pattern="[A-Za-z0-9]{24}" placeholder="(e.g 66278f120386d5ec74899451)">
+                <br>
+                <button class ='otherButton' value="searchB" id="searchB" name="button" type="submit">Search</button>
+                <button class="otherButton" style="margin-top: 10px;" value="randomB" id="randomB" name="button" type="submit">Random Search</button>
+                <button class="otherButton" style="margin-top: 10px;" value="searchAllB" id="searchAllB" name="button" type="submit">Search All Contracts</button>
+            </form>
+        </div>
+    </body>
+</html>

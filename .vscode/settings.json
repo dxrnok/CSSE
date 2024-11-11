@@ -2,5 +2,9 @@
     "files.associations": {
         "string_view": "cpp"
     },
+<<<<<<< HEAD
     "C_Cpp.errorSquiggles": "disabled"
+=======
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
+>>>>>>> 6a0a0a2310fd1010c45d68b3213c2845cfe2e984
 }
