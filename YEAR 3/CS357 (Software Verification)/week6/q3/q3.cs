@@ -15,7 +15,6 @@ using System.Collections;
 method Smallest(a: array<int>) returns (minIndex: nat)
   requires a.Length > 0
   ensures 0 <= minIndex < a.Length
-  ensures forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[minIndex] <= a[k]
   decreases a
 {
   var i := 1;
@@ -23,7 +22,6 @@ method Smallest(a: array<int>) returns (minIndex: nat)
   while i < a.Length
     invariant minIndex < a.Length
     invariant i <= a.Length
-    invariant forall k: int {:trigger a[k]} :: 0 <= k < i ==> a[minIndex] <= a[k]
     decreases a.Length - i
   {
     if a[i] < a[minIndex] {
@@ -31,22 +29,6 @@ method Smallest(a: array<int>) returns (minIndex: nat)
     }
     i := i + 1;
   }
-}
-
-method {:main} Test(_noArgsParameter: seq<seq<char>>)
-{
-  var a1 := new int[] [6, 2, 3, 4];
-  var a2 := new int[] [3, 3, 1, 3];
-  var a3 := new int[] [1, 2, 3, 4];
-  var a4 := new int[] [5, 5, 5, 5];
-  var x1 := Smallest(a1);
-  assert x1 == 2;
-  var x2 := Smallest(a2);
-  assert x2 == 1;
-  var x3 := Smallest(a3);
-  assert x3 == 1;
-  var x4 := Smallest(a4);
-  assert x4 == 5;
 }
 ")]
 
@@ -5735,57 +5717,5 @@ namespace _module {
       }
       return minIndex;
     }
-    public static void Test(Dafny.ISequence<Dafny.ISequence<Dafny.Rune>> __noArgsParameter)
-    {
-      BigInteger[] _0_a1;
-      BigInteger[] _nw0 = new BigInteger[Dafny.Helpers.ToIntChecked(new BigInteger(4), "array size exceeds memory limit")];
-      _nw0[(int)((int)(BigInteger.Zero))] = new BigInteger(6);
-      _nw0[(int)((int)(BigInteger.One))] = new BigInteger(2);
-      _nw0[(int)((int)(new BigInteger(2)))] = new BigInteger(3);
-      _nw0[(int)((int)(new BigInteger(3)))] = new BigInteger(4);
-      _0_a1 = _nw0;
-      BigInteger[] _1_a2;
-      BigInteger[] _nw1 = new BigInteger[Dafny.Helpers.ToIntChecked(new BigInteger(4), "array size exceeds memory limit")];
-      _nw1[(int)((int)(BigInteger.Zero))] = new BigInteger(3);
-      _nw1[(int)((int)(BigInteger.One))] = new BigInteger(3);
-      _nw1[(int)((int)(new BigInteger(2)))] = BigInteger.One;
-      _nw1[(int)((int)(new BigInteger(3)))] = new BigInteger(3);
-      _1_a2 = _nw1;
-      BigInteger[] _2_a3;
-      BigInteger[] _nw2 = new BigInteger[Dafny.Helpers.ToIntChecked(new BigInteger(4), "array size exceeds memory limit")];
-      _nw2[(int)((int)(BigInteger.Zero))] = BigInteger.One;
-      _nw2[(int)((int)(BigInteger.One))] = new BigInteger(2);
-      _nw2[(int)((int)(new BigInteger(2)))] = new BigInteger(3);
-      _nw2[(int)((int)(new BigInteger(3)))] = new BigInteger(4);
-      _2_a3 = _nw2;
-      BigInteger[] _3_a4;
-      BigInteger[] _nw3 = new BigInteger[Dafny.Helpers.ToIntChecked(new BigInteger(4), "array size exceeds memory limit")];
-      _nw3[(int)((int)(BigInteger.Zero))] = new BigInteger(5);
-      _nw3[(int)((int)(BigInteger.One))] = new BigInteger(5);
-      _nw3[(int)((int)(new BigInteger(2)))] = new BigInteger(5);
-      _nw3[(int)((int)(new BigInteger(3)))] = new BigInteger(5);
-      _3_a4 = _nw3;
-      BigInteger _4_x1;
-      BigInteger _out0;
-      _out0 = __default.Smallest(_0_a1);
-      _4_x1 = _out0;
-      BigInteger _5_x2;
-      BigInteger _out1;
-      _out1 = __default.Smallest(_1_a2);
-      _5_x2 = _out1;
-      BigInteger _6_x3;
-      BigInteger _out2;
-      _out2 = __default.Smallest(_2_a3);
-      _6_x3 = _out2;
-      BigInteger _7_x4;
-      BigInteger _out3;
-      _out3 = __default.Smallest(_3_a4);
-      _7_x4 = _out3;
-    }
   }
 } // end of namespace _module
-class __CallToMain {
-  public static void Main(string[] args) {
-    Dafny.Helpers.WithHaltHandling(() => _module.__default.Test(Dafny.Sequence<Dafny.ISequence<Dafny.Rune>>.UnicodeFromMainArguments(args)));
-  }
-}

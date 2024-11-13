@@ -2,14 +2,11 @@ c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.AssemblyInfoInputs.cache
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.AssemblyInfo.cs
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.csproj.CoreCompileInputs.cache
-c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.sourcelink.json
-c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.exe
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.dll
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\refint\q3.dll
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.pdb
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.deps.json
-c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.genruntimeconfig.cache
-c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.runtimeconfig.json
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.dll
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\ref\q3.dll
 c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\q3.pdb
+c:\Users\konra\OneDrive - Maynooth University\Desktop\github\CSSE\YEAR 3\CS357 (Software Verification)\week6\q3\obj\Debug\net6.0\q3.csproj.AssemblyReference.cache
