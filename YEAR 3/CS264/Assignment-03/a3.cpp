@@ -4,29 +4,15 @@
 using namespace std;
 class Matrix{
     private:
-        unsigned int row, cols;
-        //unsigned int** data;
+        unsigned int rows, cols;
+        unsigned int** data;
     public: 
         /* 1. */ 
-        Matrix ( unsigned int m , unsigned int n ){
-        /* A specialised constructor that initialises a matrix of size m×n, every element in this matrix is 0. */
-            row = m;
-            cols = n;
-            int data[m][n] ;
-            for(int i = 0; i < (row); i++){
-                //cout<< "$\n";
-                for(int j = 0; j < cols; j++){
-                    //cout<< "$";
-                    data[i][j] = 0;
-                    cout<< data;
-                }
-                cout<<"\n";
-            }
-        }
+        
         /* 2. */ 
         Matrix ( const Matrix & mat ){
         /* A copy constructor that copies every element from matrix mat. */
-            for (int i = 0; i < row; ++i){
+            for (int i = 0; i < rows; ++i){
                 for (int j = 0; j < cols; ++j){
                     data[i][j] = mat.data[i][j];
                 }
@@ -39,7 +25,7 @@ class Matrix{
             row = m;
             cols = n;
             data[m][n];
-            for(int i = 0; i < row; i++){
+            for(int i = 0; i < rows; i++){
                 for(int j = 0; j < cols; j++){
                     data[i][j] = 0;
                     printf("%s\n","*");
@@ -98,11 +84,21 @@ class Matrix{
         * @return true if both are the same , otherwise false .
         */
         //bool operator ==( const Matrix & mat ){}
+        void print() const {
+            cout << "Array-based matrix:\n";
+            for (unsigned int i = 0; i < rows; ++i) {
+                for (unsigned int j = 0; j < cols; ++j) {
+                    cout << data[i][j] << " ";
+                }
+                cout << "\n";
+            }
+        }
 
 };
 
 int main(){
-            int** a;
-            Matrix(2, 2);
-            return 0;
+    //Matrix matrix(3, 4);
+    //matrix.print();
+    printf("%s\n", "HI");
+    return 0;
 }
